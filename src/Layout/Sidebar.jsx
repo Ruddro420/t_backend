@@ -34,7 +34,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, infoData }) => {
       title: 'Room Details',
       link: '/room-details',
       icon: <MdDashboard />
-    },
+    }/* ,
     {
       title: 'Info',
       link: '/info',
@@ -69,7 +69,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, infoData }) => {
       title: 'Blogs',
       link: '/blogs',
       icon: <ImBlog />
-    }
+    } */
   ]
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
