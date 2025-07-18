@@ -2,7 +2,7 @@ import React from 'react';
 import { MdMenuOpen } from 'react-icons/md';
 import { RiMenuFold4Line } from 'react-icons/ri';
 
-const Header = ({toggleSidebar, isSidebarOpen, infoData}) => {
+const Header = ({toggleSidebar, isSidebarOpen}) => {
     return (
         <div className='w-full max-w-[100dvw]'>
             <div className="navbar bg-base-100 shadow-sm px-6">
@@ -21,7 +21,7 @@ const Header = ({toggleSidebar, isSidebarOpen, infoData}) => {
                 </div>
                 <div className="navbar-end">
                     <button className="btn btn-ghost btn-circle">
-                        <img className='h-6 w-6 rounded-full' src={infoData.image} alt={infoData.name} />
+                        <img className='h-6 w-6 rounded-full' src="https://cdn-icons-png.flaticon.com/128/1177/1177568.png" alt="user" />
                     </button>
                     <button className="btn btn-ghost btn-circle">
                         <div className="indicator">
