@@ -31,11 +31,6 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, infoData }) => {
       icon: <MdDashboard />
     },
     {
-      title: 'Room Details',
-      link: '/room-details',
-      icon: <MdDashboard />
-    },
-    {
       title: 'Info',
       link: '/info',
       icon: <FaInfoCircle />

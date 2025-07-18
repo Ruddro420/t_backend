@@ -22,17 +22,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, infoData }) => {
     },
     {
       title: 'Category',
-      link: '/category',
-      icon: <MdDashboard />
-    },
-    {
-      title: 'Match',
-      link: '/match',
-      icon: <MdDashboard />
-    },
-    {
-      title: 'Room Details',
-      link: '/room-details',
+      link: '/',
       icon: <MdDashboard />
     },
     {

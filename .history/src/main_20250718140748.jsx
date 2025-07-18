@@ -17,9 +17,6 @@ import Privateroute from "./privaterouter/Privateroute.jsx";
 import Blogs from "./pages/Blogs.jsx";
 import ReadBlog from "./pages/ReadBlog.jsx";
 import Profiles from "./pages/Profiles.jsx";
-import Category from "./pages/Category.jsx";
-import Match from "./pages/Match.jsx";
-import RoomDetails from "./pages/RoomDetails.jsx";
 const router = createBrowserRouter([
   {
     path: "",
@@ -28,18 +25,6 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Dashboard />,
-      },
-      {
-        path: "/category",
-        element: <Category />,
-      },
-      {
-        path: "/match",
-        element: <Match />,
-      },
-      {
-        path: "/room-details",
-        element: <RoomDetails />,
       },
       {
         path: "/info",

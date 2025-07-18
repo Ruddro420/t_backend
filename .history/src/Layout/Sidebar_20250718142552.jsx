@@ -9,6 +9,7 @@ import { GiSkills } from 'react-icons/gi';
 import { IoIosCloseCircle } from 'react-icons/io';
 import toast from 'react-hot-toast';
 import { ImBlog } from 'react-icons/im';
+import Category from '../pages/Category';
 const Sidebar = ({ isSidebarOpen, toggleSidebar, infoData }) => {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -22,18 +23,8 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, infoData }) => {
     },
     {
       title: 'Category',
-      link: '/category',
-      icon: <MdDashboard />
-    },
-    {
-      title: 'Match',
-      link: '/match',
-      icon: <MdDashboard />
-    },
-    {
-      title: 'Room Details',
-      link: '/room-details',
-      icon: <MdDashboard />
+      link: '/',
+      icon: <Category />
     },
     {
       title: 'Info',

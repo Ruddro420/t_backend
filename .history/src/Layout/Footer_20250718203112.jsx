@@ -4,7 +4,7 @@ const Footer = () => {
     return (
         <div className='bg-[black]  w-full mt-5'>
             <div className='p-6 space-y-6 text-center'>
-                © All Right Reserved
+            © All Right Reserved 
             </div>
         </div>
     );
