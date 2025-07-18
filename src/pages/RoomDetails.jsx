@@ -98,7 +98,7 @@ const RoomDetails = () => {
     };
 
     return (
-        <>
+        <div className="p-6 space-y-6">
             <div>
                 <h2 className="text-xl font-semibold text-gray-200 mt-6 py-5">Room Details</h2>
                 <hr />
@@ -116,7 +116,7 @@ const RoomDetails = () => {
                                 // disabled={!!editId}
                                 className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                             >
-                                <option className="lg:text-lg md:text-sm text-sm" value="">Select Match ID</option>
+                                <option className="text-sm" value="">Select Match ID</option>
                                 {matchList
                                     .filter((match) =>
                                         editId
@@ -124,7 +124,7 @@ const RoomDetails = () => {
                                             : !roomList.find((room) => room.match_id === match.id)
                                     )
                                     .map((match) => (
-                                        <option className="lg:text-lg md:text-sm text-sm" key={match.id} value={match.id}>
+                                        <option className="text-sm" key={match.id} value={match.id}>
                                             #{match.match_id}-{match.match_name}
                                         </option>
                                     ))}
@@ -221,7 +221,7 @@ const RoomDetails = () => {
                     </table>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

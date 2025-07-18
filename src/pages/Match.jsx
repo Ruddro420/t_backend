@@ -138,9 +138,9 @@ const Match = () => {
                             {...register("category_id", { required: true })}
                             className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                         >
-                            <option className="lg:text-lg md:text-sm text-sm" value="">Select Category</option>
+                            <option className="text-sm" value="">Select Category</option>
                             {categoryList?.map((cat) => (
-                                <option className="lg:text-lg md:text-sm text-sm" key={cat?.id} value={cat?.id}>
+                                <option className="text-sm" key={cat?.id} value={cat?.id}>
                                     {cat?.name}
                                 </option>
                             ))}
@@ -177,9 +177,9 @@ const Match = () => {
                             {...register("version", { required: true })}
                             className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                         >
-                            <option className="lg:text-lg md:text-sm text-sm" value="">Select Version</option>
-                            <option className="lg:text-lg md:text-sm text-sm" value="Mobile">Mobile</option>
-                            <option className="lg:text-lg md:text-sm text-sm" value="PC">PC</option>
+                            <option className=" text-sm" value="">Select Version</option>
+                            <option className=" text-sm" value="Mobile">Mobile</option>
+                            <option className=" text-sm" value="PC">PC</option>
                         </select>
                     </div>
 
@@ -193,10 +193,10 @@ const Match = () => {
                             name="game_type"
                             className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                         >
-                            <option className="lg:text-lg md:text-sm text-sm" value="">Select</option>
-                            <option className="lg:text-lg md:text-sm text-sm" value="Solo">Solo</option>
-                            <option className="lg:text-lg md:text-sm text-sm" value="Duo">Duo</option>
-                            <option className="lg:text-lg md:text-sm text-sm" value="Squad">Squad</option>
+                            <option className=" text-sm" value="">Select</option>
+                            <option className=" text-sm" value="Solo">Solo</option>
+                            <option className=" text-sm" value="Duo">Duo</option>
+                            <option className=" text-sm" value="Squad">Squad</option>
                         </select>
                         
                     </div>
