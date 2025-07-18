@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -186,6 +185,7 @@ const RoomDetails = () => {
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Action</th>
                             </tr>
                         </thead>
+                        {!loader?(
                         <tbody className="bg-gray-800 divide-y divide-gray-700">
                             {roomList.map((room) => (
                                 <tr key={room.id}>
@@ -217,6 +217,7 @@ const RoomDetails = () => {
                                 </tr>
                             )}
                         </tbody>
+                        ): (<Loader/>)}
                     </table>
                 </div>
             </div>
