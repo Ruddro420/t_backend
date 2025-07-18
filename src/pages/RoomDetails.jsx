@@ -211,7 +211,7 @@ const RoomDetails = () => {
                                 ))}
                                 {roomList.length === 0 && (
                                     <tr>
-                                        <td colSpan="4" className="px-6 py-4 text-center text-gray-400">
+                                        <td colSpan="4" className=" py-4 text-center text-gray-400 w-full">
                                             No rooms found.
                                         </td>
                                     </tr>

@@ -166,8 +166,8 @@ const Category = () => {
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <img className="w-10 h-10 rounded" src={`${VITE_FILE_API}/${item.image}`} alt={item.name} />
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{item.name}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{new Date(item.created_at).toLocaleDateString()}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-gray-200">{item.name}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-gray-200">{new Date(item.created_at).toLocaleDateString()}</td>
                                     <td className="px-6 py-4 whitespace-nowrap flex gap-2">
                                         <button className="btn" onClick={() => handleEdit(item)}>Edit</button>
                                         <button className="btn bg-red-500" onClick={() => handleDelete(item.id)}>Delete</button>
