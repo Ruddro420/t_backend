@@ -185,39 +185,39 @@ const RoomDetails = () => {
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Action</th>
                             </tr>
                         </thead>
-                        {!loader?(
-                        <tbody className="bg-gray-800 divide-y divide-gray-700">
-                            {roomList.map((room) => (
-                                <tr key={room.id}>
-                                    <td className="px-6 py-4 text-sm text-gray-200">#{room.match_id}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-200">{room.match.match_name}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-200">{room.room_id}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-200">{room.room_password}</td>
-                                    <td className="px-6 py-4 flex gap-2">
-                                        <button
-                                            className="btn"
-                                            onClick={() => handleEdit(room)}
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                            className="btn bg-red-500"
-                                            onClick={() => handleDelete(room.id)}
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                            {roomList.length === 0 && (
-                                <tr>
-                                    <td colSpan="4" className="px-6 py-4 text-center text-gray-400">
-                                        No rooms found.
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                        ): (<Loader/>)}
+                        {!loader ? (
+                            <tbody className="bg-gray-800 divide-y divide-gray-700">
+                                {roomList.map((room) => (
+                                    <tr key={room.id}>
+                                        <td className="px-6 py-4 text-sm text-gray-200">#{room.match_id}</td>
+                                        <td className="px-6 py-4 text-sm text-gray-200">{room.match.match_name}</td>
+                                        <td className="px-6 py-4 text-sm text-gray-200">{room.room_id}</td>
+                                        <td className="px-6 py-4 text-sm text-gray-200">{room.room_password}</td>
+                                        <td className="px-6 py-4 flex gap-2">
+                                            <button
+                                                className="btn"
+                                                onClick={() => handleEdit(room)}
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                className="btn bg-red-500"
+                                                onClick={() => handleDelete(room.id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                                {roomList.length === 0 && (
+                                    <tr>
+                                        <td colSpan="4" className="px-6 py-4 text-center text-gray-400">
+                                            No rooms found.
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        ) : (<Loader />)}
                     </table>
                 </div>
             </div>

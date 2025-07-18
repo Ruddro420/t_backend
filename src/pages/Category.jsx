@@ -91,7 +91,7 @@ const Category = () => {
     const handleEdit = (item) => {
         setEditId(item.id);
         setValue("category_name", item.name);
-        setPreviewImage(`${VITE_FILE_API}/storage/${item.image}`);
+        setPreviewImage(`${VITE_FILE_API}/${item.image}`);
     };
 
     return (
@@ -164,7 +164,7 @@ const Category = () => {
                             {categoryList.map((item) => (
                                 <tr key={item._id}>
                                     <td className="px-6 py-4 whitespace-nowrap">
-                                        <img className="w-10 h-10 rounded" src={`${VITE_FILE_API}/storage/${item.image}`} alt={item.name} />
+                                        <img className="w-10 h-10 rounded" src={`${VITE_FILE_API}/${item.image}`} alt={item.name} />
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">{item.name}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{new Date(item.created_at).toLocaleDateString()}</td>
