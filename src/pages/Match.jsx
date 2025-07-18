@@ -318,7 +318,7 @@ const Match = () => {
                                 {matchList ? matchList.map((item) => (
                                     <tr key={item.id}>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                        <img className="w-10 h-10 rounded" src={`${VITE_FILE_API}/storage/${item.category?.image}`} alt={item.name} />
+                                        <img className="w-10 h-10 rounded" src={`${VITE_FILE_API}/${item.category?.image}`} alt={item.name} />
                                     </td>
                                         <td className="px-6 py-4 text-sm text-gray-200">{item.match_name}</td>
                                         <td className="px-6 py-4 text-sm text-gray-200">{item.category?.name}</td>
