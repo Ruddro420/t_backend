@@ -117,7 +117,7 @@ const Match = () => {
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 {/* Match Details */}
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid lg:grid-cols-2 md:grid-cols-2 gap-6">
                     <div>
                         <label className="text-sm font-medium text-gray-200 block mb-2">
                             Match Name<span className="text-red-500">*</span>
@@ -138,9 +138,9 @@ const Match = () => {
                             {...register("category_id", { required: true })}
                             className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                         >
-                            <option value="">Select Category</option>
+                            <option className="lg:text-lg md:text-sm text-sm" value="">Select Category</option>
                             {categoryList?.map((cat) => (
-                                <option key={cat?.id} value={cat?.id}>
+                                <option className="lg:text-lg md:text-sm text-sm" key={cat?.id} value={cat?.id}>
                                     {cat?.name}
                                 </option>
                             ))}
@@ -177,9 +177,9 @@ const Match = () => {
                             {...register("version", { required: true })}
                             className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                         >
-                            <option value="">Select Version</option>
-                            <option value="Mobile">Mobile</option>
-                            <option value="PC">PC</option>
+                            <option className="lg:text-lg md:text-sm text-sm" value="">Select Version</option>
+                            <option className="lg:text-lg md:text-sm text-sm" value="Mobile">Mobile</option>
+                            <option className="lg:text-lg md:text-sm text-sm" value="PC">PC</option>
                         </select>
                     </div>
 
@@ -193,10 +193,10 @@ const Match = () => {
                             name="game_type"
                             className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                         >
-                            <option value="">Select</option>
-                            <option value="Solo">Solo</option>
-                            <option value="Duo">Duo</option>
-                            <option value="Squad">Squad</option>
+                            <option className="lg:text-lg md:text-sm text-sm" value="">Select</option>
+                            <option className="lg:text-lg md:text-sm text-sm" value="Solo">Solo</option>
+                            <option className="lg:text-lg md:text-sm text-sm" value="Duo">Duo</option>
+                            <option className="lg:text-lg md:text-sm text-sm" value="Squad">Squad</option>
                         </select>
                         
                     </div>
@@ -227,7 +227,7 @@ const Match = () => {
                 <h2 className="text-xl font-semibold text-gray-200 mt-6 py-4">Winner Prize</h2>
                 <hr />
                 <br />
-                <div className="grid lg:grid-cols-4 gap-6">
+                <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
                     <div>
                         <label htmlFor="win_price" className="text-sm font-medium text-gray-200 block mb-2">
                             Win Price<span className="text-red-500">*</span>

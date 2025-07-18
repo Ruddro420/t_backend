@@ -100,7 +100,7 @@ const Category = () => {
                 <h2 className="text-2xl font-semibold text-gray-200 py-5">Category</h2>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="grid grid-cols-3 items-end gap-6">
+                    <div className="grid lg:grid-cols-3 md:grid-cols-2 items-end gap-6">
                         <div>
                             <label htmlFor="category_name" className="text-sm font-medium text-gray-200 block mb-2">
                                 Name <span className="text-red-500">*</span>

@@ -105,7 +105,7 @@ const RoomDetails = () => {
                 <br />
 
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="grid grid-cols-3 gap-6">
+                    <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
                         {/* Match ID */}
                         <div>
                             <label className="text-sm font-medium text-gray-200 block mb-2">
@@ -116,7 +116,7 @@ const RoomDetails = () => {
                                 // disabled={!!editId}
                                 className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                             >
-                                <option value="">Select Match ID</option>
+                                <option className="lg:text-lg md:text-sm text-sm" value="">Select Match ID</option>
                                 {matchList
                                     .filter((match) =>
                                         editId
@@ -124,7 +124,7 @@ const RoomDetails = () => {
                                             : !roomList.find((room) => room.match_id === match.id)
                                     )
                                     .map((match) => (
-                                        <option key={match.id} value={match.id}>
+                                        <option className="lg:text-lg md:text-sm text-sm" key={match.id} value={match.id}>
                                             #{match.match_id}-{match.match_name}
                                         </option>
                                     ))}

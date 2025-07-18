@@ -1,10 +1,10 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-
+/* 
 #root{
     background: #1d232a !important;
-}
+} */
 .active{
     background-color: #155dfc;
 }
