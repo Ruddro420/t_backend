@@ -69,7 +69,7 @@ const Match = () => {
         };
 
         const request = editId
-            ? axios.post(`${VITE_SERVER_API}/matches/${editId}`, payload)
+            ? axios.put(`${VITE_SERVER_API}/matches/${editId}`, payload)
             : axios.post(`${VITE_SERVER_API}/matches`, payload);
 
         toast.promise(request, {
@@ -293,7 +293,7 @@ const Match = () => {
 
                 {/* Submit */}
                 <div className="mt-6">
-                    <button type="submit" className="bg-blue-800 text-white px-4 py-2 rounded cursor-pointer">
+                    <button type="submit" className="bg-blue-800 text-white px-4 py-2 rounded">
                         {editId ? "Update Match" : "Submit Match"}
                     </button>
                 </div>
