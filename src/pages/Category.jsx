@@ -19,6 +19,7 @@ const Category = () => {
     const [loader, setLoader] = useState(true);
     const [editId, setEditId] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
+    // eslint-disable-next-line no-unused-vars
     const [rules, setRules] = useState("");
 
     const VITE_SERVER_API = import.meta.env.VITE_SERVER_API;
