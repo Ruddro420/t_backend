@@ -96,6 +96,7 @@ const RoomDetails = () => {
             }
         );
     };
+    console.log("Room List:", roomList);
 
     return (
         <div className="p-6 space-y-6">
@@ -189,7 +190,7 @@ const RoomDetails = () => {
                             <tbody className="bg-gray-800 divide-y divide-gray-700">
                                 {roomList.map((room) => (
                                     <tr key={room.id}>
-                                        <td className="px-6 py-4 text-sm text-gray-200">#{room.match_id}</td>
+                                        <td className="px-6 py-4 text-sm text-gray-200">#{room.match?.match_id}</td>
                                         <td className="px-6 py-4 text-sm text-gray-200">{room.match.match_name}</td>
                                         <td className="px-6 py-4 text-sm text-gray-200">{room.room_id}</td>
                                         <td className="px-6 py-4 text-sm text-gray-200">{room.room_password}</td>

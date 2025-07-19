@@ -1,16 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Loader from "../components/Loader";
-
+import { RichTextEditor } from '@mantine/rte';
 const Category = () => {
     const {
         register,
         handleSubmit,
         reset,
         setValue,
+        control,
         formState: { errors },
     } = useForm();
 
@@ -18,6 +19,7 @@ const Category = () => {
     const [loader, setLoader] = useState(true);
     const [editId, setEditId] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
+    const [rules, setRules] = useState("");
 
     const VITE_SERVER_API = import.meta.env.VITE_SERVER_API;
     const VITE_FILE_API = import.meta.env.VITE_FILE_API;
@@ -42,18 +44,24 @@ const Category = () => {
 
     // Add or Update Category
     const onSubmit = async (data) => {
+        // console.log("Form Data:", data);
+        setRules(data.rules);
         const formData = new FormData();
         formData.append("category_name", data.category_name);
-
+        // Ensure rules is always a string
+        formData.append("rules", typeof data.rules === "string" ? data.rules : String(data.rules));
+        console.log("form data", formData);
         // Only append image if a new one was selected
         if (data.category_image && data.category_image.length > 0) {
             formData.append("category_image", data.category_image[0]);
         }
-
+        // Debug: log the actual value of rules
+        console.log("rules value:", data.rules);
         const request = editId
             ? axios.post(`${VITE_SERVER_API}/categories/${editId}`, formData)
             : axios.post(`${VITE_SERVER_API}/add/categories`, formData);
-
+        
+        
         toast.promise(request, {
             loading: editId ? "Updating..." : "Saving...",
             success: editId ? "Category updated!" : "Category added!",
@@ -91,6 +99,7 @@ const Category = () => {
     const handleEdit = (item) => {
         setEditId(item.id);
         setValue("category_name", item.name);
+        setValue("rules", item.rules);
         setPreviewImage(`${VITE_FILE_API}/${item.image}`);
     };
 
@@ -128,6 +137,20 @@ const Category = () => {
                             />
 
                             {errors.category_image && <p className="text-red-500 text-xs mt-1">Image is required</p>}
+                        </div>
+
+                        <div className="col-span-6">
+                            <label htmlFor="ex1" className="text-sm font-medium text-gray-200 block mb-2">Blog Content</label>
+                            {/* <textarea id="blogContent" rows="6" {...register("blogContent", { required: true })} className={classList.textarea} placeholder="Describe your Blog..." /> */}
+                            <Controller
+                                name="rules"
+                                {...register("rules", { required: true })}
+                                control={control}
+                                defaultValue=""
+                                render={({ field }) => (
+                                    <RichTextEditor {...field} className="bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg focus:ring-blue-900 focus:border-blue-900 block w-full p-4" />
+                                )}
+                            />
                         </div>
 
                         <div>

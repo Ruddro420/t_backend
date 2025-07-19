@@ -54,6 +54,8 @@ const Match = () => {
     }, []);
 
     const onSubmit = async (data) => {
+        console.log("Submitted data:", data); // 👈 ADD THIS LINE
+
         const payload = {
             ...data,
             max_player: parseInt(data.max_player),
@@ -86,12 +88,22 @@ const Match = () => {
             .catch((err) => console.error(err));
     };
 
+
     const handleEdit = (item) => {
         setEditId(item.id);
+
+        // Extract category_id from item.category
+        const categoryId = item?.category?.id;
+        setValue("category_id", categoryId);
+
+        // Set all other values EXCEPT category and id
         Object.entries(item).forEach(([key, value]) => {
-            if (value !== null) setValue(key, value);
+            if (key !== "category" && key !== "id" && value !== null) {
+                setValue(key, value);
+            }
         });
     };
+
 
     const handleDelete = async (id) => {
         const confirmDelete = window.confirm("Are you sure you want to delete?");
@@ -136,15 +148,17 @@ const Match = () => {
                         </label>
                         <select
                             {...register("category_id", { required: true })}
+                            
                             className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                         >
-                            <option className="text-sm" value="">Select Category</option>
+                            <option value="">Select Category</option>
                             {categoryList?.map((cat) => (
-                                <option className="text-sm" key={cat?.id} value={cat?.id}>
+                                <option key={cat?.id} value={cat?.id}>
                                     {cat?.name}
                                 </option>
                             ))}
                         </select>
+
                         {errors.category && <span className="text-red-400 text-sm">Category is required</span>}
                     </div>
                 </div>
@@ -198,7 +212,7 @@ const Match = () => {
                             <option className=" text-sm" value="Duo">Duo</option>
                             <option className=" text-sm" value="Squad">Squad</option>
                         </select>
-                        
+
                     </div>
 
                     <div>
@@ -318,8 +332,8 @@ const Match = () => {
                                 {matchList ? matchList.map((item) => (
                                     <tr key={item.id}>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                        <img className="w-10 h-10 rounded" src={`${VITE_FILE_API}/${item.category?.image}`} alt={item.name} />
-                                    </td>
+                                            <img className="w-10 h-10 rounded" src={`${VITE_FILE_API}/${item.category?.image}`} alt={item.name} />
+                                        </td>
                                         <td className="px-6 py-4 text-sm text-gray-200">{item.match_name}</td>
                                         <td className="px-6 py-4 text-sm text-gray-200">{item.category?.name}</td>
                                         <td className="px-6 py-4 text-sm text-gray-200">{item.max_player}</td>
