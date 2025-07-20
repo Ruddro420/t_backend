@@ -13,7 +13,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate()
-  
+
 
   const routes = [
     {
@@ -32,10 +32,22 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
       icon: <MdDashboard />
     },
     {
+      title: 'Deposits',
+      link: '/deposits',
+      icon: <MdDashboard />
+    },
+    {
       title: 'Room Details',
       link: '/room-details',
       icon: <MdDashboard />
-    }/* ,
+    },
+    {
+      title: 'Settings',
+      link: '/settings',
+      icon: <MdDashboard />
+    }
+
+    /* ,
     {
       title: 'Info',
       link: '/info',

@@ -20,6 +20,8 @@ import Profiles from "./pages/Profiles.jsx";
 import Category from "./pages/Category.jsx";
 import Match from "./pages/Match.jsx";
 import RoomDetails from "./pages/RoomDetails.jsx";
+import Deposits from "./pages/Deposits.jsx";
+import Settings from "./pages/Settings.jsx";
 const router = createBrowserRouter([
   {
     path: "",
@@ -34,12 +36,20 @@ const router = createBrowserRouter([
         element: <Category />,
       },
       {
+        path: "/deposits",
+        element: <Deposits />,
+      },
+      {
         path: "/match",
         element: <Match />,
       },
       {
         path: "/room-details",
         element: <RoomDetails />,
+      },
+      {
+        path: "/settings",
+        element: <Settings />,
       },
       {
         path: "/info",

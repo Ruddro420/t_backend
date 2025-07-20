@@ -70,7 +70,7 @@ const Match = () => {
 
         const request = editId
             ? axios.post(`${VITE_SERVER_API}/matches/${editId}`, payload)
-            : axios.post(`${VITE_SERVER_API}/matches`, payload);
+            : axios.post(`${VITE_SERVER_API}/add/match`, payload);
 
         toast.promise(request, {
             loading: editId ? "Updating..." : "Saving...",

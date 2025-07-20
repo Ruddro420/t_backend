@@ -74,7 +74,7 @@ const RoomDetails = () => {
 
     const handleEdit = (item) => {
         setEditId(item.id);
-        setValue("match_id", item.match_id);
+        setValue("match_id", item.id);
         setValue("room_id", item.room_id);
         setValue("room_password", item.room_password);
     };

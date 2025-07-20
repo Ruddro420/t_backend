@@ -61,8 +61,8 @@ const Category = () => {
         const request = editId
             ? axios.post(`${VITE_SERVER_API}/categories/${editId}`, formData)
             : axios.post(`${VITE_SERVER_API}/add/categories`, formData);
-        
-        
+
+
         toast.promise(request, {
             loading: editId ? "Updating..." : "Saving...",
             success: editId ? "Category updated!" : "Category added!",
@@ -139,7 +139,13 @@ const Category = () => {
 
                             {errors.category_image && <p className="text-red-500 text-xs mt-1">Image is required</p>}
                         </div>
-
+                        {previewImage && (
+                            <img
+                                src={previewImage}
+                                alt="Preview"
+                                className="w-16 h-16 rounded mt-2 border border-gray-600"
+                            />
+                        )}
                         <div className="col-span-6">
                             <label htmlFor="ex1" className="text-sm font-medium text-gray-200 block mb-2">Blog Content</label>
                             {/* <textarea id="blogContent" rows="6" {...register("blogContent", { required: true })} className={classList.textarea} placeholder="Describe your Blog..." /> */}
@@ -162,13 +168,7 @@ const Category = () => {
                                 {editId ? "Update Category" : "Add Category"}
                             </button>
                         </div>
-                        {previewImage && (
-                            <img
-                                src={previewImage}
-                                alt="Preview"
-                                className="w-16 h-16 rounded mt-2 border border-gray-600"
-                            />
-                        )}
+
                     </div>
                 </form>
             </div>
