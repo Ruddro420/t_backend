@@ -205,7 +205,7 @@ const AddResult = () => {
                         <div className="mt-6">
                             <button
                                 type="submit"
-                                className="bg-blue-800 text-white px-4 py-2 rounded cursor-pointer"
+                                className="shadow-sm bg-blue-800 border text-white sm:text-sm rounded-lg block w-full p-2.5 cursor-pointer"
                             >
                                 Submit Result
                             </button>

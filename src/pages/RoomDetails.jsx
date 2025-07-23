@@ -20,6 +20,7 @@ const RoomDetails = () => {
     const [roomList, setRoomList] = useState([]);
     const [loader, setLoader] = useState(true);
     const [editId, setEditId] = useState(null);
+    const [editItem, setEditItem] = useState(null);
 
     const fetchMatches = () => {
         axios
@@ -73,11 +74,17 @@ const RoomDetails = () => {
     };
 
     const handleEdit = (item) => {
+        setEditItem(item);
         setEditId(item.id);
-        setValue("match_id", item.id);
-        setValue("room_id", item.room_id);
-        setValue("room_password", item.room_password);
     };
+    useEffect(() => {
+        if (editItem && matchList.length > 0) {
+            setValue("match_id", editItem.match_id);
+            setValue("room_id", editItem.room_id);
+            setValue("room_password", editItem.room_password);
+        }
+    }, [matchList, editItem]);
+
 
     const handleDelete = async (id) => {
         const confirm = window.confirm("Are you sure you want to delete?");
@@ -112,6 +119,7 @@ const RoomDetails = () => {
                                 Match ID<span className="text-red-500">*</span>
                             </label>
                             <select
+                                 disabled={editId !== null}
                                 {...register("match_id", { required: true })}
                                 // disabled={!!editId}
                                 className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"

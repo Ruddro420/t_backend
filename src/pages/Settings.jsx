@@ -209,7 +209,7 @@ const Settings = () => {
 
                         <div className="col-span-6 sm:col-span-3">
                             <div className={`${classList.label} text-transparent`}> Submit{" "}</div>
-                            <button className={`${classList.button} btn`} type="submit">
+                            <button className="shadow-sm bg-blue-800 border text-white sm:text-sm rounded-lg block w-full p-2.5 cursor-pointer" type="submit">
                                 {editId ? 'Update' : 'Submit'}
                             </button>
                         </div>
