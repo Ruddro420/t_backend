@@ -49,12 +49,9 @@ const Deposits = () => {
 
     return (
         <div className="p-6 space-y-6">
-
-            {/* Room List */}
+            <h2 className="text-2xl font-semibold text-blue-500">All Deposits</h2>
             <div>
-                <h2 className="text-xl font-semibold text-gray-200 mt-6 py-5">Room Details List</h2>
-                <hr />
-                <br />
+
                 {/* <h2 className="text-xl font-semibold text-gray-200 mt-6 py-5">Room Details List</h2> */}
                 <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">

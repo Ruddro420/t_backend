@@ -27,8 +27,13 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
       icon: <MdDashboard />
     },
     {
-      title: 'Match',
-      link: '/match',
+      title: 'Add Match',
+      link: '/addmatch',
+      icon: <MdDashboard />
+    },
+    {
+      title: 'All Matches',
+      link: '/allmatch',
       icon: <MdDashboard />
     },
     {

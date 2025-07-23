@@ -18,10 +18,12 @@ import Blogs from "./pages/Blogs.jsx";
 import ReadBlog from "./pages/ReadBlog.jsx";
 import Profiles from "./pages/Profiles.jsx";
 import Category from "./pages/Category.jsx";
-import Match from "./pages/Match.jsx";
+import AddMatch from "./pages/AddMatch.jsx";
 import RoomDetails from "./pages/RoomDetails.jsx";
 import Deposits from "./pages/Deposits.jsx";
 import Settings from "./pages/Settings.jsx";
+import AllMatch from "./pages/AllMatch.jsx";
+import AddResult from "./pages/AddResult.jsx";
 const router = createBrowserRouter([
   {
     path: "",
@@ -40,8 +42,16 @@ const router = createBrowserRouter([
         element: <Deposits />,
       },
       {
-        path: "/match",
-        element: <Match />,
+        path: "/addmatch",
+        element: <AddMatch />,
+      },
+      {
+        path: "/addresult/:matchId",
+        element: <AddResult />,
+      },
+      {
+        path: "/allmatch",
+        element: <AllMatch />,
       },
       {
         path: "/room-details",

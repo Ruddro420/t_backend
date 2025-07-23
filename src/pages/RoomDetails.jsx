@@ -100,10 +100,9 @@ const RoomDetails = () => {
 
     return (
         <div className="p-6 space-y-6">
+            <h2 className="text-2xl font-semibold text-blue-500">Room Details</h2>
             <div>
-                <h2 className="text-xl font-semibold text-gray-200 mt-6 py-5">Room Details</h2>
-                <hr />
-                <br />
+
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">

@@ -5,7 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Loader from "../components/Loader";
 
-const Match = () => {
+const AddMatch = () => {
     const {
         register,
         handleSubmit,
@@ -120,7 +120,7 @@ const Match = () => {
 
     return (
         <div className="p-6 space-y-6">
-            <h2 className="text-2xl font-semibold text-gray-200">Add Match Details</h2>
+            <h2 className="text-2xl font-semibold text-blue-500">Add Match Details</h2>
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 {/* Match Details */}
@@ -355,4 +355,4 @@ const Match = () => {
     );
 };
 
-export default Match;
+export default AddMatch;

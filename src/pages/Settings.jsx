@@ -98,8 +98,8 @@ const Settings = () => {
 
     return (
         <div className="p-6 space-y-6">
+            <h2 className="text-2xl font-semibold text-blue-500">App Settings</h2>
             {loading ? <Loader /> : (<>
-                <h2 className="text-2xl font-semibold text-gray-200">App Settings</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-6 gap-6">
                         <div className="col-span-6 sm:col-span-3">
