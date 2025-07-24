@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import Loader from '../components/Loader';
+import toast from 'react-hot-toast';
 
 const AddResult = () => {
     const { matchId } = useParams();
@@ -9,27 +10,59 @@ const AddResult = () => {
     const [loader, setLoader] = useState(true);
     const [matchDetails, setMatchDetails] = useState({});
     const [results, setResults] = useState([]);
-    const [winner, setWinner] = useState('');
-    const [second, setSecond] = useState('');
-    const [third, setThird] = useState('');
-    const [fourth, setFourth] = useState('');
+    const [winner, setWinner] = useState(null);
+    const [second, setSecond] = useState(null);
+    const [third, setThird] = useState(null);
+    const [fourth, setFourth] = useState(null);
+    const [fifth, setFifth] = useState(null);
+    const [sixth, setSixth] = useState(null);
+    const [isEditMode, setIsEditMode] = useState(false);
+
+
+
 
     useEffect(() => {
-        fetch(`${VITE_SERVER_API}/get/matches/${matchId}`)
-            .then((res) => res.json())
-            .then((data) => {
-                setMatchDetails(data);
-                // Initialize result input fields for each joined player
-                const initialResults = data.joins.map(join => ({
+        const fetchData = async () => {
+            try {
+                const matchRes = await fetch(`${VITE_SERVER_API}/get/matches/${matchId}`);
+                const matchData = await matchRes.json();
+                setMatchDetails(matchData);
+
+                let initialResults = matchData.joins.map(join => ({
                     user_id: join.user_id,
+                    ex_1: join.ex1,
                     pname1_kill: 0,
                     pname2_kill: 0,
                     total_prize: 0
                 }));
-                setResults(initialResults);
+
+                const resultRes = await fetch(`${VITE_SERVER_API}/get/match-results/${matchId}`);
+                const resultData = await resultRes.json();
+
+                if (resultData?.player_results) {
+                    // If existing result found
+                    setWinner(resultData.winner || '');
+                    setSecond(resultData.second || '');
+                    setThird(resultData.third || '');
+                    setFourth(resultData.fourth || '');
+                    setFifth(resultData.fifth || '');
+                    setSixth(resultData.sixth || '');
+                    setResults(resultData.player_results || initialResults);
+                    setIsEditMode(true);
+                } else {
+                    setResults(initialResults);
+                }
+            } catch (error) {
+                console.error("Error fetching match/result data:", error);
+            } finally {
                 setLoader(false);
-            });
+            }
+        };
+
+        fetchData();
     }, []);
+
+    console.log(matchDetails.joins)
 
     const handleInputChange = (index, field, value) => {
         const updatedResults = [...results];
@@ -44,17 +77,20 @@ const AddResult = () => {
 
         const resultPayload = {
             match_id: matchId,
-            winner: winner,
-            second: second,
-            third: third,
-            fourth: fourth,
+            winner,
+            second,
+            third,
+            fourth,
+            fifth,
+            sixth,
             result: results
         };
 
-        console.log("📦 Final Payload to be sent to backend:", resultPayload);
+        const endpoint = isEditMode ? `${VITE_SERVER_API}/edit/match-results/${matchId}` : `${VITE_SERVER_API}/match-result`;
+        const method = isEditMode ? 'PUT' : 'POST';
 
-        fetch(`${VITE_SERVER_API}/add/result`, {
-            method: 'POST',
+        fetch(endpoint, {
+            method,
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -62,23 +98,23 @@ const AddResult = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log('✅ Server Response:', data);
-                if (data.success) {
-                    alert('Results submitted successfully!');
+                if (data) {
+                    toast.success(isEditMode ? 'Results updated successfully!' : 'Results submitted successfully!');
                 } else {
-                    alert('Submission failed.');
+                    toast.error('Submission failed.');
                 }
             })
             .catch(err => {
                 console.error('❌ Error submitting results:', err);
-                alert('Error submitting results.');
+                toast.error('Error submitting results.');
             });
     };
 
 
+
     return (
         <div className="p-6 space-y-6">
-            <h2 className="text-2xl font-semibold text-blue-500">Add Result (#{matchDetails?.match_id}-{matchDetails?.match_name})</h2>
+            <h2 className="text-2xl font-semibold text-blue-500"> {isEditMode ? "Edit Result" : "Add Result"} (#{matchDetails?.match_id}-{matchDetails?.match_name})</h2>
             <div className='grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1  gap-6 mt-4'>
                 <div>
                     <label className="text-sm font-medium text-gray-200 block mb-2">
@@ -145,6 +181,42 @@ const AddResult = () => {
                         className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                     >
                         <option value="">Select 4th</option>
+                        {matchDetails?.joins?.map((player, i) => (
+                            <option key={i} value={player.user_id}>
+                                {player.pname1}  {player.pname2 && `& ${player.pname2}`}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    <label className="text-sm font-medium text-gray-200 block mb-2">
+                        Select 5th Position<span className="text-red-500">*</span>
+                    </label>
+                    <select
+                        value={fifth}
+                        onChange={(e) => setFifth(e.target.value)}
+                        required
+                        className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
+                    >
+                        <option value="">Select 5th</option>
+                        {matchDetails?.joins?.map((player, i) => (
+                            <option key={i} value={player.user_id}>
+                                {player.pname1}  {player.pname2 && `& ${player.pname2}`}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    <label className="text-sm font-medium text-gray-200 block mb-2">
+                        Select 6th Position<span className="text-red-500">*</span>
+                    </label>
+                    <select
+                        value={sixth}
+                        onChange={(e) => setSixth(e.target.value)}
+                        required
+                        className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
+                    >
+                        <option value="">Select 6th</option>
                         {matchDetails?.joins?.map((player, i) => (
                             <option key={i} value={player.user_id}>
                                 {player.pname1}  {player.pname2 && `& ${player.pname2}`}

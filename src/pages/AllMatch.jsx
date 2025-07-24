@@ -60,7 +60,8 @@ const AllMatch = () => {
                                     <td className="px-6 py-4 text-sm text-gray-200">{item.time}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{item.total_prize}</td>
                                     <td className="px-6 py-4 flex gap-2">
-                                        <Link to={`/addresult/${item.id}`} className="btn">Add Result</Link>
+                                        <Link to={`/viewresult/${item.id}`} className="btn">View Result</Link>
+                                         <Link to={`/addresult/${item.id}`} className="btn">Add Result</Link>
                                     </td>
                                 </tr>
                             )) : (

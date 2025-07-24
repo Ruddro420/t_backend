@@ -91,8 +91,25 @@ const Deposits = () => {
             error: "Something went wrong!",
         });
         request
-            .then(() => fetchDeposits())
-            .catch((err) => console.error(err));
+        //need to send the notificat
+        // axios.post(`${VITE_SERVER_API}/notify-user`, {
+        //     user_id: id,
+        //     message: `Your deposit has been ${status === 1 ? "approved" : "set to pending"}.`,
+        // })
+        //     .then((response) => console.log(response))
+        //     .catch((error) => console.error("Notification error:", error));
+        axios.post(`${VITE_SERVER_API}/notify-user`, {
+            user_id: id,
+            message: `Your deposit has been ${status === 1 ? "approved" : "set to pending"}.`,
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((response) => console.log(response))
+            .catch((error) => console.error("Notification error:", error));
+
+
     };
 
     return (
