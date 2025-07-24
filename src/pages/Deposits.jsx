@@ -91,13 +91,6 @@ const Deposits = () => {
             error: "Something went wrong!",
         });
         request
-        //need to send the notificat
-        // axios.post(`${VITE_SERVER_API}/notify-user`, {
-        //     user_id: id,
-        //     message: `Your deposit has been ${status === 1 ? "approved" : "set to pending"}.`,
-        // })
-        //     .then((response) => console.log(response))
-        //     .catch((error) => console.error("Notification error:", error));
         axios.post(`${VITE_SERVER_API}/notify-user`, {
             user_id: id,
             message: `Your deposit has been ${status === 1 ? "approved" : "set to pending"}.`,
