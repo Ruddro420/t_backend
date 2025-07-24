@@ -1,17 +1,21 @@
-import React from 'react';
 import { MdMenuOpen } from 'react-icons/md';
 import { RiMenuFold4Line } from 'react-icons/ri';
 
-const Header = ({toggleSidebar, isSidebarOpen}) => {
+
+
+
+const Header = ({ toggleSidebar, isSidebarOpen }) => {
+
+
     return (
         <div className='w-full max-w-[100dvw]'>
             <div className="navbar bg-base-100 shadow-sm px-6">
                 <div className="navbar-start">
                     <div className="dropdown" onClick={toggleSidebar}>
                         <div className="btn btn-ghost btn-circle">
-                            {isSidebarOpen?<MdMenuOpen size={25}/>:<RiMenuFold4Line size={25}/>
-                        }
-                        
+                            {isSidebarOpen ? <MdMenuOpen size={25} /> : <RiMenuFold4Line size={25} />
+                            }
+
 
                         </div>
                     </div>

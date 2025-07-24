@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Loader from "../components/Loader";
-
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase/firebase";
 const Deposits = () => {
     const VITE_SERVER_API = import.meta.env.VITE_SERVER_API;
 
@@ -11,6 +12,20 @@ const Deposits = () => {
     const [filteredList, setFilteredList] = useState([]);
     const [loader, setLoader] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
+
+    const sendNotification = async (userId, message) => {
+        try {
+            await addDoc(collection(db, 'notifications'), {
+                userId: userId,
+                message: message,
+                timestamp: serverTimestamp()
+            });
+            // alert('Notification sent!');
+        } catch (error) {
+            console.error('Error sending notification:', error);
+        }
+    };
+
 
     const [filters, setFilters] = useState({
         user_id: "",
@@ -83,7 +98,7 @@ const Deposits = () => {
     }, [filters, searchTerm]); // <-- Add searchTerm here
 
 
-    const onSubmit = async (id, status) => {
+    const onSubmit = async (id, userid, amount, status) => {
         const request = axios.post(`${VITE_SERVER_API}/deposites/${id}/${status}`);
         toast.promise(request, {
             loading: "Updating...",
@@ -91,18 +106,8 @@ const Deposits = () => {
             error: "Something went wrong!",
         });
         request
-        axios.post(`${VITE_SERVER_API}/notify-user`, {
-            user_id: id,
-            message: `Your deposit has been ${status === 1 ? "approved" : "set to pending"}.`,
-        }, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((response) => console.log(response))
-            .catch((error) => console.error("Notification error:", error));
-
-
+        fetchDeposits()
+        sendNotification(userid, `Your deposit of Taka${amount} has been ${status == 1 ? "approved" : "pending"}!`);
     };
 
     return (
@@ -172,7 +177,7 @@ const Deposits = () => {
                                     <td className="px-6 py-4 flex gap-2">
                                         <button
                                             className={`btn ${deposit.status == 0 ? 'btn-success' : 'bg-red-500'} text-white`}
-                                            onClick={() => onSubmit(deposit.id, deposit.status == 0 ? 1 : 0)}
+                                            onClick={() => onSubmit(deposit.id, deposit.user_id, deposit.amount, deposit.status == 0 ? 1 : 0)}
                                         >
                                             {deposit.status == 0 ? "Approve" : "Pending"}
                                         </button>
