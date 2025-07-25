@@ -184,7 +184,7 @@ const Settings = () => {
                         </div>
                         <div>
                             <label htmlFor="banner_3" className="text-sm font-medium text-gray-200 block mb-2">
-                                Upload Banner 2 <span className="text-red-500">*</span>
+                                Upload Banner 3 <span className="text-red-500">*</span>
                             </label>
                             <input
                                 id="banner_3"

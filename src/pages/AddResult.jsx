@@ -141,7 +141,7 @@ const AddResult = () => {
                     <select
                         value={second}
                         onChange={(e) => setSecond(e.target.value)}
-                        required
+                        
                         className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                     >
                         <option value="">Select 2nd</option>
@@ -159,7 +159,7 @@ const AddResult = () => {
                     <select
                         value={third}
                         onChange={(e) => setThird(e.target.value)}
-                        required
+                        
                         className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                     >
                         <option value="">Select 3rd</option>
@@ -177,7 +177,7 @@ const AddResult = () => {
                     <select
                         value={fourth}
                         onChange={(e) => setFourth(e.target.value)}
-                        required
+                        
                         className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                     >
                         <option value="">Select 4th</option>
@@ -195,7 +195,7 @@ const AddResult = () => {
                     <select
                         value={fifth}
                         onChange={(e) => setFifth(e.target.value)}
-                        required
+                        
                         className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                     >
                         <option value="">Select 5th</option>
@@ -206,7 +206,7 @@ const AddResult = () => {
                         ))}
                     </select>
                 </div>
-                <div>
+                {/* <div>
                     <label className="text-sm font-medium text-gray-200 block mb-2">
                         Select 6th Position<span className="text-red-500">*</span>
                     </label>
@@ -223,7 +223,7 @@ const AddResult = () => {
                             </option>
                         ))}
                     </select>
-                </div>
+                </div> */}
             </div>
             {/* then add 2nd, 3rd, 4rth, 5th */}
             <div >
