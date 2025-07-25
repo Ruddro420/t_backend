@@ -106,7 +106,7 @@ const RoomDetails = () => {
     console.log("Room List:", roomList);
 
     return (
-        <div className="p-6 space-y-6">
+        <div className="lg:p-6 py-6 space-y-6">
             <h2 className="text-2xl font-semibold text-blue-500">Room Details</h2>
             <div>
 

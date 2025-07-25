@@ -119,12 +119,12 @@ const AddMatch = () => {
     };
 
     return (
-        <div className="p-6 space-y-6">
+        <div className="lg:p-6 py-6 space-y-6">
             <h2 className="text-2xl font-semibold text-blue-500">Add Match Details</h2>
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 {/* Match Details */}
-                <div className="grid lg:grid-cols-2 md:grid-cols-2 gap-6">
+                <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-2 gap-6">
                     <div>
                         <label className="text-sm font-medium text-gray-200 block mb-2">
                             Match Name<span className="text-red-500">*</span>
@@ -160,7 +160,7 @@ const AddMatch = () => {
                 <h2 className="text-xl font-semibold text-gray-200 mt-6 py-4">Game Details</h2>
                 <hr />
                 <br />
-                <div className="grid lg:grid-cols-7 gap-6 sm:grid-cols-2">
+                <div className="grid lg:grid-cols-7 gap-6 grid-cols-2">
                     <div>
                         <label htmlFor="max_player" className="text-sm font-medium text-gray-200 block mb-2">
                             Max Player
@@ -233,7 +233,7 @@ const AddMatch = () => {
                 <h2 className="text-xl font-semibold text-gray-200 mt-6 py-4">Winner Prize</h2>
                 <hr />
                 <br />
-                <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
+                <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 gap-6">
                     <div>
                         <label htmlFor="win_price" className="text-sm font-medium text-gray-200 block mb-2">
                             Win Price<span className="text-red-500">*</span>

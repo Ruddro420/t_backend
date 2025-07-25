@@ -105,12 +105,12 @@ const Category = () => {
     };
 
     return (
-        <div className="p-6 space-y-6">
+        <div className="lg:p-6 py-6 space-y-6">
             <h2 className="text-2xl font-semibold text-blue-500">Category</h2>
             <div>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 items-end gap-6">
+                    <div className="lg:grid md:grid flex flex-col items-streach lg:grid-cols-3 md:grid-cols-2  lg:items-end gap-6">
                         <div>
                             <label htmlFor="category_name" className="text-sm font-medium text-gray-200 block mb-2">
                                 Name <span className="text-red-500">*</span>

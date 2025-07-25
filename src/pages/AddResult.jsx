@@ -113,10 +113,10 @@ const AddResult = () => {
 
 
     return (
-        <div className="p-6 space-y-6">
+        <div className="lg:p-6 py-6 space-y-6">
             <h2 className="text-2xl font-semibold text-blue-500"> {isEditMode ? "Edit Result" : "Add Result"} (#{matchDetails?.match_id}-{matchDetails?.match_name})</h2>
-            <div className='grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1  gap-6 mt-4'>
-                <div>
+            <div className='grid lg:grid-cols-2 md:grid-cols-2 grid-cols-2  gap-6 mt-4'>
+                <div className='lg:col-span-1 col-span-2'>
                     <label className="text-sm font-medium text-gray-200 block mb-2">
                         Select Winner<span className="text-red-500">*</span>
                     </label>
@@ -141,7 +141,7 @@ const AddResult = () => {
                     <select
                         value={second}
                         onChange={(e) => setSecond(e.target.value)}
-                        
+
                         className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                     >
                         <option value="">Select 2nd</option>
@@ -159,7 +159,7 @@ const AddResult = () => {
                     <select
                         value={third}
                         onChange={(e) => setThird(e.target.value)}
-                        
+
                         className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                     >
                         <option value="">Select 3rd</option>
@@ -177,7 +177,7 @@ const AddResult = () => {
                     <select
                         value={fourth}
                         onChange={(e) => setFourth(e.target.value)}
-                        
+
                         className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                     >
                         <option value="">Select 4th</option>
@@ -195,7 +195,7 @@ const AddResult = () => {
                     <select
                         value={fifth}
                         onChange={(e) => setFifth(e.target.value)}
-                        
+
                         className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
                     >
                         <option value="">Select 5th</option>
@@ -229,63 +229,66 @@ const AddResult = () => {
             <div >
                 <h2 className="text-xl font-semibold text-gray-200 mt-6">Add Score</h2>
                 <br />
-                {!loader ? (
-                    <form onSubmit={handleSubmit}>
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-gray-800 text-left">
-                                <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-200"></th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Player 1</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Player 1 Kill</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Player 2</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Player 2 Kill</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Total Prize</th>
-                                </tr>
-                            </thead>
-                            <tbody className="bg-gray-800 divide-y divide-gray-700 text-left">
-                                {matchDetails.joins.map((item, i) => (
-                                    <tr key={i}>
-                                        <td className="px-6 py-4 text-sm text-gray-200">{i + 1}</td>
-                                        <td className="px-6 py-4 text-sm text-gray-200">{item.pname1}</td>
-                                        <td className="px-6 py-4">
-                                            <input
-                                                type="number"
-                                                className="w-24 p-1 rounded bg-gray-700 text-white"
-                                                value={results[i]?.pname1_kill || 0}
-                                                onChange={(e) => handleInputChange(i, 'pname1_kill', e.target.value)}
-                                            />
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-200">{item.pname2 || ""}</td>
-                                        <td className="px-6 py-4">
-                                            {item.pname2 && (
-                                                <input
-                                                    type="number"
-                                                    className="w-24 p-1 rounded bg-gray-700 text-white"
-                                                    value={results[i]?.pname2_kill || 0}
-                                                    onChange={(e) => handleInputChange(i, 'pname2_kill', e.target.value)}
-                                                />
-                                            )}
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-200">
-                                            {results[i]?.total_prize || 0}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-
-                        <div className="mt-6">
-                            <button
-                                type="submit"
-                                className="shadow-sm bg-blue-800 border text-white sm:text-sm rounded-lg block w-full p-2.5 cursor-pointer"
-                            >
-                                Submit Result
-                            </button>
-                        </div>
-                    </form>
-                ) : (
-                    <Loader />
-                )}
+                <div >
+                    {!loader ? (
+                        <form onSubmit={handleSubmit}>
+                            <div className='overflow-x-auto'>
+                                <table className="min-w-full divide-y divide-gray-200">
+                                    <thead className="bg-gray-800 text-left">
+                                        <tr>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-200"></th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Player 1</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Player 1 Kill</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Player 2</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Player 2 Kill</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Total Prize</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="bg-gray-800 divide-y divide-gray-700 text-left">
+                                        {matchDetails.joins.map((item, i) => (
+                                            <tr key={i}>
+                                                <td className="px-6 py-4 text-sm text-gray-200">{i + 1}</td>
+                                                <td className="px-6 py-4 text-sm text-gray-200">{item.pname1}</td>
+                                                <td className="px-6 py-4">
+                                                    <input
+                                                        type="number"
+                                                        className="w-24 p-1 rounded bg-gray-700 text-white"
+                                                        value={results[i]?.pname1_kill || 0}
+                                                        onChange={(e) => handleInputChange(i, 'pname1_kill', e.target.value)}
+                                                    />
+                                                </td>
+                                                <td className="px-6 py-4 text-sm text-gray-200">{item.pname2 || ""}</td>
+                                                <td className="px-6 py-4">
+                                                    {item.pname2 && (
+                                                        <input
+                                                            type="number"
+                                                            className="w-24 p-1 rounded bg-gray-700 text-white"
+                                                            value={results[i]?.pname2_kill || 0}
+                                                            onChange={(e) => handleInputChange(i, 'pname2_kill', e.target.value)}
+                                                        />
+                                                    )}
+                                                </td>
+                                                <td className="px-6 py-4 text-sm text-gray-200">
+                                                    {results[i]?.total_prize || 0}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="mt-6">
+                                <button
+                                    type="submit"
+                                    className="shadow-sm bg-blue-800 border text-white sm:text-sm rounded-lg block w-full p-2.5 cursor-pointer"
+                                >
+                                    Submit Result
+                                </button>
+                            </div>
+                        </form>
+                    ) : (
+                        <Loader />
+                    )}
+                </div>
             </div>
         </div>
     );

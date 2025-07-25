@@ -97,11 +97,11 @@ const Settings = () => {
     };
 
     return (
-        <div className="p-6 space-y-6">
+        <div className="lg:p-6 py-6 space-y-6">
             <h2 className="text-2xl font-semibold text-blue-500">App Settings</h2>
             {loading ? <Loader /> : (<>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="grid grid-cols-6 gap-6">
+                    <div className="grid lg:grid-cols-6 gap-6">
                         <div className="col-span-6 sm:col-span-3">
                             <label htmlFor="app_name" className={classList.label}>Name</label>
                             <input type="text" id="app_name" {...register("app_name", { required: true })} className={classList.input} placeholder="Enter Site Title" />
@@ -110,102 +110,105 @@ const Settings = () => {
                             <label htmlFor="notice" className={classList.label}>Notice</label>
                             <input type="text" id="notice" {...register("notice", { required: true })} className={classList.input} placeholder="Enter Notice" />
                         </div>
-                        <div>
-                            <label htmlFor="app_logo" className="text-sm font-medium text-gray-200 block mb-2">
-                                Upload Logo Image <span className="text-red-500">*</span>
-                            </label>
-                            <input
-                                id="app_logo"
-                                name="app_logo"
-                                type="file"
-                                {...register("app_logo", { required: !editId })}
-                                accept="image/*"
-                                className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg focus:ring-blue-900 focus:border-blue-900 block w-full p-2.5"
-                                onChange={e => {
-                                    if (e.target.files && e.target.files[0]) {
-                                        setPreviewLogo(URL.createObjectURL(e.target.files[0]));
-                                    } else {
-                                        setPreviewLogo(null);
-                                    }
-                                }}
-                            />
-                            {errors.app_logo && <p className="text-red-500 text-xs mt-1">Image is required</p>}
-                            {previewLogo && (
-                                <img src={previewLogo} alt="Logo Preview" className="w-16 h-16 rounded mt-2 border border-gray-600" />
-                            )}
+                        <div className=' flex lg:grid grid-cols-4 md:grid  flex-col col-span-6 gap-6 w-full'>
+                            <div>
+                                <label htmlFor="app_logo" className="text-sm font-medium text-gray-200 block mb-2">
+                                    Upload Logo Image <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    id="app_logo"
+                                    name="app_logo"
+                                    type="file"
+                                    {...register("app_logo", { required: !editId })}
+                                    accept="image/*"
+                                    className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg focus:ring-blue-900 focus:border-blue-900 block w-full p-2.5"
+                                    onChange={e => {
+                                        if (e.target.files && e.target.files[0]) {
+                                            setPreviewLogo(URL.createObjectURL(e.target.files[0]));
+                                        } else {
+                                            setPreviewLogo(null);
+                                        }
+                                    }}
+                                />
+                                {errors.app_logo && <p className="text-red-500 text-xs mt-1">Image is required</p>}
+                                {previewLogo && (
+                                    <img src={previewLogo} alt="Logo Preview" className="w-16 h-16 rounded mt-2 border border-gray-600" />
+                                )}
+                            </div>
+                            <div>
+                                <label htmlFor="banner_1" className="text-sm font-medium text-gray-200 block mb-2">
+                                    Upload Banner 1 <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    id="banner_1"
+                                    name="banner_1"
+                                    type="file"
+                                    {...register("banner_1", { required: !editId })}
+                                    accept="image/*"
+                                    className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg focus:ring-blue-900 focus:border-blue-900 block w-full p-2.5"
+                                    onChange={e => {
+                                        if (e.target.files && e.target.files[0]) {
+                                            setPreviewBanner_1(URL.createObjectURL(e.target.files[0]));
+                                        } else {
+                                            setPreviewBanner_1(null);
+                                        }
+                                    }}
+                                />
+                                {errors.banner_1 && <p className="text-red-500 text-xs mt-1">Image is required</p>}
+                                {previewBanner_1 && (
+                                    <img src={previewBanner_1} alt="Banner_1 Preview" className="w-16 h-16 rounded mt-2 border border-gray-600" />
+                                )}
+                            </div>
+                            <div>
+                                <label htmlFor="banner_2" className="text-sm font-medium text-gray-200 block mb-2">
+                                    Upload Banner 2 <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    id="banner_2"
+                                    name="banner_2"
+                                    type="file"
+                                    {...register("banner_2", { required: !editId })}
+                                    accept="image/*"
+                                    className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg focus:ring-blue-900 focus:border-blue-900 block w-full p-2.5"
+                                    onChange={e => {
+                                        if (e.target.files && e.target.files[0]) {
+                                            setPreviewBanner_2(URL.createObjectURL(e.target.files[0]));
+                                        } else {
+                                            setPreviewBanner_2(null);
+                                        }
+                                    }}
+                                />
+                                {errors.banner_2 && <p className="text-red-500 text-xs mt-1">Image is required</p>}
+                                {previewBanner_2 && (
+                                    <img src={previewBanner_2} alt="Banner_2 Preview" className="w-16 h-16 rounded mt-2 border border-gray-600" />
+                                )}
+                            </div>
+                            <div>
+                                <label htmlFor="banner_3" className="text-sm font-medium text-gray-200 block mb-2">
+                                    Upload Banner 3 <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    id="banner_3"
+                                    name="banner_3"
+                                    type="file"
+                                    {...register("banner_3", { required: !editId })}
+                                    accept="image/*"
+                                    className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg focus:ring-blue-900 focus:border-blue-900 block w-full p-2.5"
+                                    onChange={e => {
+                                        if (e.target.files && e.target.files[0]) {
+                                            setPreviewBanner_3(URL.createObjectURL(e.target.files[0]));
+                                        } else {
+                                            setPreviewBanner_3(null);
+                                        }
+                                    }}
+                                />
+                                {errors.banner_3 && <p className="text-red-500 text-xs mt-1">Image is required</p>}
+                                {previewBanner_3 && (
+                                    <img src={previewBanner_3} alt="Banner_3 Preview" className="w-16 h-16 rounded mt-2 border border-gray-600" />
+                                )}
+                            </div>
                         </div>
-                        <div>
-                            <label htmlFor="banner_1" className="text-sm font-medium text-gray-200 block mb-2">
-                                Upload Banner 1 <span className="text-red-500">*</span>
-                            </label>
-                            <input
-                                id="banner_1"
-                                name="banner_1"
-                                type="file"
-                                {...register("banner_1", { required: !editId })}
-                                accept="image/*"
-                                className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg focus:ring-blue-900 focus:border-blue-900 block w-full p-2.5"
-                                onChange={e => {
-                                    if (e.target.files && e.target.files[0]) {
-                                        setPreviewBanner_1(URL.createObjectURL(e.target.files[0]));
-                                    } else {
-                                        setPreviewBanner_1(null);
-                                    }
-                                }}
-                            />
-                            {errors.banner_1 && <p className="text-red-500 text-xs mt-1">Image is required</p>}
-                            {previewBanner_1 && (
-                                <img src={previewBanner_1} alt="Banner_1 Preview" className="w-16 h-16 rounded mt-2 border border-gray-600" />
-                            )}
-                        </div>
-                        <div>
-                            <label htmlFor="banner_2" className="text-sm font-medium text-gray-200 block mb-2">
-                                Upload Banner 2 <span className="text-red-500">*</span>
-                            </label>
-                            <input
-                                id="banner_2"
-                                name="banner_2"
-                                type="file"
-                                {...register("banner_2", { required: !editId })}
-                                accept="image/*"
-                                className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg focus:ring-blue-900 focus:border-blue-900 block w-full p-2.5"
-                                onChange={e => {
-                                    if (e.target.files && e.target.files[0]) {
-                                        setPreviewBanner_2(URL.createObjectURL(e.target.files[0]));
-                                    } else {
-                                        setPreviewBanner_2(null);
-                                    }
-                                }}
-                            />
-                            {errors.banner_2 && <p className="text-red-500 text-xs mt-1">Image is required</p>}
-                            {previewBanner_2 && (
-                                <img src={previewBanner_2} alt="Banner_2 Preview" className="w-16 h-16 rounded mt-2 border border-gray-600" />
-                            )}
-                        </div>
-                        <div>
-                            <label htmlFor="banner_3" className="text-sm font-medium text-gray-200 block mb-2">
-                                Upload Banner 3 <span className="text-red-500">*</span>
-                            </label>
-                            <input
-                                id="banner_3"
-                                name="banner_3"
-                                type="file"
-                                {...register("banner_3", { required: !editId })}
-                                accept="image/*"
-                                className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg focus:ring-blue-900 focus:border-blue-900 block w-full p-2.5"
-                                onChange={e => {
-                                    if (e.target.files && e.target.files[0]) {
-                                        setPreviewBanner_3(URL.createObjectURL(e.target.files[0]));
-                                    } else {
-                                        setPreviewBanner_3(null);
-                                    }
-                                }}
-                            />
-                            {errors.banner_3 && <p className="text-red-500 text-xs mt-1">Image is required</p>}
-                            {previewBanner_3 && (
-                                <img src={previewBanner_3} alt="Banner_3 Preview" className="w-16 h-16 rounded mt-2 border border-gray-600" />
-                            )}
-                        </div>
+
 
                         <div className="col-span-6 sm:col-span-3">
                             <div className={`${classList.label} text-transparent`}> Submit{" "}</div>

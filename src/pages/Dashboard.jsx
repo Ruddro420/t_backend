@@ -11,26 +11,36 @@ const Dashboard = () => {
 
    
     return (
-        <div className='p-6 space-y-6'>
+        <div className='lg:p-6 py-6 space-y-6'>
             {loading ? <Loader /> : (
 
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
-                    <div className='border border-gray-500 flex flex-col gap-4 rounded-lg p-6'>
-                        <div className="title text-md font-bold flex gap-2 items-center"><MdWork />Total Experience</div>
-                        <div className="data">20</div>
-                    </div>
-                    <div className='border border-gray-500 flex flex-col gap-4 rounded-lg p-6'>
-                        <div className="title text-md font-bold flex gap-2 items-center"> <MdWorkHistory />Total Projects</div>
+                <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4'>
+                    <div className='border border-gray-500 flex flex-col gap-4 rounded-lg lg:p-6 p-4'>
+                        <div className="title text-md lg:font-bold font-semibold flex gap-2 items-center"> <MdWorkHistory />Total Category</div>
                         <div className="data">10</div>
                     </div>
-                    <div className='border border-gray-500 flex flex-col gap-4 rounded-lg p-6'>
-                        <div className="title text-md font-bold flex gap-2 items-center"><GiSkills />Total Skills</div>
-                        <div className="data">15</div>
+                    <div className='border border-gray-500 flex flex-col gap-4 rounded-lg lg:p-6 p-4'>
+                        <div className="title text-md lg:font-bold font-semibold flex gap-2 items-center"><MdWork />Total Match</div>
+                        <div className="data">20</div>
                     </div>
-                    <div className='border border-gray-500 flex flex-col gap-4 rounded-lg p-6'>
-                        <div className="title text-md font-bold flex gap-2 items-center"><FaTools />Total Technologies</div>
+                    <div className='border border-gray-500 flex flex-col gap-4 rounded-lg lg:p-6 p-4'>
+                        <div className="title text-md lg:font-bold font-semibold flex gap-2 items-center"><FaTools />Pending Match</div>
                         <div className="data">9</div>
                     </div>
+                    
+                    <div className='border border-gray-500 flex flex-col gap-4 rounded-lg lg:p-6 p-4'>
+                        <div className="title text-md lg:font-bold font-semibold flex gap-2 items-center"><GiSkills />Total Deposits</div>
+                        <div className="data">15</div>
+                    </div>
+                    <div className='border border-gray-500 flex flex-col gap-4 rounded-lg lg:p-6 p-4'>
+                        <div className="title text-md lg:font-bold font-semibold flex gap-2 items-center"><FaTools />Total Withdraw</div>
+                        <div className="data">9</div>
+                    </div>
+                    <div className='border border-gray-500 flex flex-col gap-4 rounded-lg lg:p-6 p-4'>
+                        <div className="title text-md lg:font-bold font-semibold flex gap-2 items-center"><FaTools />Net Balance</div>
+                        <div className="data">9</div>
+                    </div>
+                    
 
                 </div>
             )}

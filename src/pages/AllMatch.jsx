@@ -26,7 +26,7 @@ const AllMatch = () => {
     }, []);
     return (
 
-        <div className="p-6 space-y-6">
+        <div className="lg:p-6 py-6 space-y-6">
             <h2 className="text-2xl font-semibold text-blue-500">All Matches</h2>
             <div className="overflow-x-auto">
                 {!loader ? (
@@ -48,7 +48,7 @@ const AllMatch = () => {
                         <tbody className="bg-gray-800 divide-y divide-gray-700">
                             {matchList && matchList.length > 0 ? matchList.map((item) => (
                                 <tr key={item.id}>
-                                    <td className="px-6 py-4 whitespace-nowrap">
+                                    <td className="lg:px-6 pl-2 lg:py-4 whitespace-nowrap">
                                         <img className="w-10 h-10 rounded" src={`${VITE_FILE_API}/${item.category?.image}`} alt={item.name} />
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{item.match_name}</td>
@@ -60,7 +60,7 @@ const AllMatch = () => {
                                     <td className="px-6 py-4 text-sm text-gray-200">{item.time}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{item.total_prize}</td>
                                     <td className="px-6 py-4 flex gap-2">
-                                         <Link to={`/addresult/${item.id}`} className="btn">Add Result</Link>
+                                         <Link to={`/addresult/${item.id}`} className="btn"> Result</Link>
                                     </td>
                                 </tr>
                             )) : (

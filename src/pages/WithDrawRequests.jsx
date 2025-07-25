@@ -92,7 +92,7 @@ const WithDrawRequests = () => {
         });
         setFilteredList(withdrawList);
     };
-// console.log("withdrawlist",withdrawList)
+    // console.log("withdrawlist",withdrawList)
 
     useEffect(() => {
         handleFilter();
@@ -112,11 +112,14 @@ const WithDrawRequests = () => {
     };
 
     return (
-        <div className="p-6 space-y-6">
+        <div className="lg:p-6 py-6 space-y-6">
             <h2 className="text-2xl font-semibold text-blue-500">All Withdraw Requests</h2>
 
             {/* Filter Inputs */}
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-gray-800 p-4 rounded-lg">
+                <h2 className="text-xl font-semibold text-gray-200 ">
+                    Filter Withdraw List
+                </h2>
                 <input
                     type="text"
                     placeholder="Search user, transaction ID, phone, method, amount"
@@ -154,6 +157,9 @@ const WithDrawRequests = () => {
 
 
             {/* Table */}
+            <h2 className="text-xl font-semibold text-gray-200 ">
+                Withdraw List
+            </h2>
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-800">
