@@ -42,6 +42,11 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
       icon: <MdDashboard />
     },
     {
+      title: 'Withdraw Requests',
+      link: '/withdraw-requests',
+      icon: <MdDashboard />
+    },
+    {
       title: 'Room Details',
       link: '/room-details',
       icon: <MdDashboard />

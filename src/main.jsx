@@ -21,6 +21,7 @@ import Category from "./pages/Category.jsx";
 import AddMatch from "./pages/AddMatch.jsx";
 import RoomDetails from "./pages/RoomDetails.jsx";
 import Deposits from "./pages/Deposits.jsx";
+import WithDrawRequests from "./pages/WithDrawRequests.jsx";
 import Settings from "./pages/Settings.jsx";
 import AllMatch from "./pages/AllMatch.jsx";
 import AddResult from "./pages/AddResult.jsx";
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/room-details",
         element: <RoomDetails />,
+      },
+      {
+        path: "/withdraw-requests",
+        element: <WithDrawRequests />,
       },
       {
         path: "/settings",
