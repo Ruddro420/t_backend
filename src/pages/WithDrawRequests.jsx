@@ -116,10 +116,10 @@ const WithDrawRequests = () => {
             <h2 className="text-2xl font-semibold text-blue-500">All Withdraw Requests</h2>
 
             {/* Filter Inputs */}
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-gray-800 p-4 rounded-lg">
                 <h2 className="text-xl font-semibold text-gray-200 ">
                     Filter Withdraw List
                 </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-gray-800 p-4 rounded-lg">
                 <input
                     type="text"
                     placeholder="Search user, transaction ID, phone, method, amount"
