@@ -25,7 +25,6 @@ import WithDrawRequests from "./pages/WithDrawRequests.jsx";
 import Settings from "./pages/Settings.jsx";
 import AllMatch from "./pages/AllMatch.jsx";
 import AddResult from "./pages/AddResult.jsx";
-import ViewResult from "./pages/ViewResult.jsx";
 const router = createBrowserRouter([
   {
     path: "",
@@ -51,10 +50,7 @@ const router = createBrowserRouter([
         path: "/addresult/:matchId",
         element: <AddResult />,
       },
-      {
-        path: "/viewresult/:matchId",
-        element: <ViewResult />,
-      },
+      
       {
         path: "/allmatch",
         element: <AllMatch />,
