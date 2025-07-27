@@ -18,9 +18,6 @@ const AddResult = () => {
     const [sixth, setSixth] = useState(null);
     const [isEditMode, setIsEditMode] = useState(false);
 
-
-
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -28,7 +25,7 @@ const AddResult = () => {
                 const matchData = await matchRes.json();
                 setMatchDetails(matchData);
 
-                let initialResults = matchData.joins.map(join => ({
+                const initialResults = matchData.joins.map(join => ({
                     user_id: join.user_id,
                     ex_1: join.ex1,
                     pname1_kill: 0,
@@ -40,14 +37,32 @@ const AddResult = () => {
                 const resultData = await resultRes.json();
 
                 if (resultData?.player_results) {
-                    // If existing result found
+                    const updatedResults = matchData.joins.map(join => {
+                        const existing = resultData.player_results.find(r => r.user_id === join.user_id);
+                        return existing
+                            ? {
+                                ...existing,
+                                ex_1: join.ex1, // Ensure ex_1 is kept from matchData
+                                pname1_kill: parseInt(existing.pname1_kill) || 0,
+                                pname2_kill: parseInt(existing.pname2_kill) || 0,
+                                total_prize: (parseInt(existing.pname1_kill) + parseInt(existing.pname2_kill)) * parseInt(matchData.kill_price)
+                            }
+                            : {
+                                user_id: join.user_id,
+                                ex_1: join.ex1,
+                                pname1_kill: 0,
+                                pname2_kill: 0,
+                                total_prize: 0
+                            };
+                    });
+
+                    setResults(updatedResults);
                     setWinner(resultData.winner || '');
                     setSecond(resultData.second || '');
                     setThird(resultData.third || '');
                     setFourth(resultData.fourth || '');
                     setFifth(resultData.fifth || '');
                     setSixth(resultData.sixth || '');
-                    setResults(resultData.player_results || initialResults);
                     setIsEditMode(true);
                 } else {
                     setResults(initialResults);
@@ -62,13 +77,13 @@ const AddResult = () => {
         fetchData();
     }, []);
 
-    console.log(matchDetails.joins)
-
     const handleInputChange = (index, field, value) => {
         const updatedResults = [...results];
         updatedResults[index][field] = parseInt(value) || 0;
-        updatedResults[index].total_prize =
-            (updatedResults[index].pname1_kill + updatedResults[index].pname2_kill) * matchDetails.kill_price;
+        const pname1Kill = parseInt(updatedResults[index].pname1_kill) || 0;
+        const pname2Kill = parseInt(updatedResults[index].pname2_kill) || 0;
+        const killPrice = parseInt(matchDetails.kill_price) || 0;
+        updatedResults[index].total_prize = (pname1Kill + pname2Kill) * killPrice;
         setResults(updatedResults);
     };
 
@@ -85,6 +100,7 @@ const AddResult = () => {
             sixth,
             result: results
         };
+        console.log(resultPayload)
 
         const endpoint = isEditMode ? `${VITE_SERVER_API}/edit/match-results/${matchId}` : `${VITE_SERVER_API}/match-result`;
         const method = isEditMode ? 'PUT' : 'POST';
@@ -110,142 +126,60 @@ const AddResult = () => {
             });
     };
 
-
-
     return (
         <div className="lg:p-6 py-6 space-y-6">
-            <h2 className="text-2xl font-semibold text-blue-500"> {isEditMode ? "Edit Result" : "Add Result"} (#{matchDetails?.match_id}-{matchDetails?.match_name})</h2>
-            <div className='grid lg:grid-cols-2 md:grid-cols-2 grid-cols-2  gap-6 mt-4'>
-                <div className='lg:col-span-1 col-span-2'>
-                    <label className="text-sm font-medium text-gray-200 block mb-2">
-                        Select Winner<span className="text-red-500">*</span>
-                    </label>
-                    <select
-                        value={winner}
-                        onChange={(e) => setWinner(e.target.value)}
-                        required
-                        className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
-                    >
-                        <option value="">Select Winner</option>
-                        {matchDetails?.joins?.map((player, i) => (
-                            <option key={i} value={player.user_id}>
-                                {player.pname1}  {player.pname2 && `& ${player.pname2}`}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div>
-                    <label className="text-sm font-medium text-gray-200 block mb-2">
-                        Select 2nd Position<span className="text-red-500">*</span>
-                    </label>
-                    <select
-                        value={second}
-                        onChange={(e) => setSecond(e.target.value)}
+            <h2 className="text-2xl font-semibold text-blue-500">
+                {isEditMode ? "Edit Result" : "Add Result"} (#{matchDetails?.match_id}-{matchDetails?.match_name})
+            </h2>
 
-                        className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
-                    >
-                        <option value="">Select 2nd</option>
-                        {matchDetails?.joins?.map((player, i) => (
-                            <option key={i} value={player.user_id}>
-                                {player.pname1}  {player.pname2 && `& ${player.pname2}`}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div>
-                    <label className="text-sm font-medium text-gray-200 block mb-2">
-                        Select 3rd Position<span className="text-red-500">*</span>
-                    </label>
-                    <select
-                        value={third}
-                        onChange={(e) => setThird(e.target.value)}
-
-                        className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
-                    >
-                        <option value="">Select 3rd</option>
-                        {matchDetails?.joins?.map((player, i) => (
-                            <option key={i} value={player.user_id}>
-                                {player.pname1}  {player.pname2 && `& ${player.pname2}`}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div>
-                    <label className="text-sm font-medium text-gray-200 block mb-2">
-                        Select 4th Position<span className="text-red-500">*</span>
-                    </label>
-                    <select
-                        value={fourth}
-                        onChange={(e) => setFourth(e.target.value)}
-
-                        className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
-                    >
-                        <option value="">Select 4th</option>
-                        {matchDetails?.joins?.map((player, i) => (
-                            <option key={i} value={player.user_id}>
-                                {player.pname1}  {player.pname2 && `& ${player.pname2}`}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div>
-                    <label className="text-sm font-medium text-gray-200 block mb-2">
-                        Select 5th Position<span className="text-red-500">*</span>
-                    </label>
-                    <select
-                        value={fifth}
-                        onChange={(e) => setFifth(e.target.value)}
-
-                        className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
-                    >
-                        <option value="">Select 5th</option>
-                        {matchDetails?.joins?.map((player, i) => (
-                            <option key={i} value={player.user_id}>
-                                {player.pname1}  {player.pname2 && `& ${player.pname2}`}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                {/* <div>
-                    <label className="text-sm font-medium text-gray-200 block mb-2">
-                        Select 6th Position<span className="text-red-500">*</span>
-                    </label>
-                    <select
-                        value={sixth}
-                        onChange={(e) => setSixth(e.target.value)}
-                        required
-                        className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
-                    >
-                        <option value="">Select 6th</option>
-                        {matchDetails?.joins?.map((player, i) => (
-                            <option key={i} value={player.user_id}>
-                                {player.pname1}  {player.pname2 && `& ${player.pname2}`}
-                            </option>
-                        ))}
-                    </select>
-                </div> */}
+            <div className='grid lg:grid-cols-2 md:grid-cols-2 grid-cols-2 gap-6 mt-4'>
+                {[
+                    { label: "Winner", state: winner, setter: setWinner, prize: matchDetails?.win_price },
+                    { label: "2nd Position", state: second, setter: setSecond, prize: matchDetails?.second_prize },
+                    { label: "3rd Position", state: third, setter: setThird, prize: matchDetails?.third_prize },
+                    { label: "4th Position", state: fourth, setter: setFourth, prize: matchDetails?.fourth_prize },
+                    { label: "5th Position", state: fifth, setter: setFifth, prize: matchDetails?.fifth_prize },
+                ].map((pos, i) => (
+                    <div key={i}>
+                        <label className="text-sm font-medium text-gray-200 block mb-2">
+                            Select {pos.label} ({pos.prize})<span className="text-red-500">*</span>
+                        </label>
+                        <select
+                            value={pos.state}
+                            onChange={(e) => pos.setter(e.target.value)}
+                            className="shadow-sm bg-gray-800 border border-gray-700 text-gray-200 sm:text-sm rounded-lg block w-full p-2.5"
+                        >
+                            <option value="">Select {pos.label}</option>
+                            {matchDetails?.joins?.map((player, i) => (
+                                <option key={i} value={player.user_id}>
+                                    {player.pname1}  {player.pname2 && `& ${player.pname2}`}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                ))}
             </div>
-            {/* then add 2nd, 3rd, 4rth, 5th */}
-            <div >
+
+            <div>
                 <h2 className="text-xl font-semibold text-gray-200 mt-6">Add Score</h2>
                 <br />
-                <div >
+                <div>
                     {!loader ? (
                         <form onSubmit={handleSubmit}>
                             <div className='overflow-x-auto'>
                                 <table className="min-w-full divide-y divide-gray-200">
                                     <thead className="bg-gray-800 text-left">
                                         <tr>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-200"></th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Player 1</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Player 1 Kill</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Player 2</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Player 2 Kill</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Total Prize</th>
+                                            <th className="px-6 py-3 text-xs font-medium text-gray-200"></th>
+                                            <th className="px-6 py-3 text-xs font-medium text-gray-200">Player 1</th>
+                                            <th className="px-6 py-3 text-xs font-medium text-gray-200">Player 1 Kill</th>
+                                            <th className="px-6 py-3 text-xs font-medium text-gray-200">Player 2</th>
+                                            <th className="px-6 py-3 text-xs font-medium text-gray-200">Player 2 Kill</th>
+                                            <th className="px-6 py-3 text-xs font-medium text-gray-200">Total Prize</th>
                                         </tr>
                                     </thead>
                                     <tbody className="bg-gray-800 divide-y divide-gray-700 text-left">
-                                        {matchDetails.joins.map((item, i) => (
+                                        {matchDetails.joins?.map((item, i) => (
                                             <tr key={i}>
                                                 <td className="px-6 py-4 text-sm text-gray-200">{i + 1}</td>
                                                 <td className="px-6 py-4 text-sm text-gray-200">{item.pname1}</td>
