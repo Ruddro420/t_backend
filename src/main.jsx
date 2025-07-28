@@ -17,6 +17,7 @@ import WithDrawRequests from "./pages/WithDrawRequests.jsx";
 import Settings from "./pages/Settings.jsx";
 import AllMatch from "./pages/AllMatch.jsx";
 import AddResult from "./pages/AddResult.jsx";
+import Users from "./pages/Users.jsx";
 const router = createBrowserRouter([
   {
     path: "",
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: "/settings",
         element: <Settings />,
+      },
+      {
+        path: "/users",
+        element: <Users />,
       }
 
     ],

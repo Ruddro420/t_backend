@@ -52,6 +52,11 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
       icon: <MdDashboard />
     },
     {
+      title: 'Users',
+      link: '/users',
+      icon: <MdDashboard />
+    },
+    {
       title: 'Settings',
       link: '/settings',
       icon: <MdDashboard />
