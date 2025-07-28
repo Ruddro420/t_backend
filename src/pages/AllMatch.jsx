@@ -30,7 +30,7 @@ const AllMatch = () => {
     const SetStatus = (date, time) => {
         const matchDateTime = new Date(`${date}T${time}`);
         const now = new Date();
-        return now > matchDateTime ? "Ended" : "starting";
+        return now > matchDateTime ? "Ended" : "Starting";
     }
     const navigate = useNavigate();
 
@@ -81,11 +81,11 @@ const AllMatch = () => {
                                     <td className="px-6 py-4 text-sm text-gray-200">{item.version}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{item.date}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{item.time}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-200"><span className={`${SetStatus(item.date, item.time) == "starting" ? "bg-green-500" : "bg-red-500"} p-2 rounded-lg`}>{SetStatus(item.date, item.time)}</span></td>
+                                    <td className="px-6 py-4 text-sm text-gray-200"><span className={`${SetStatus(item.date, item.time) == "Starting" ? "bg-green-500" : "bg-red-500"} p-2 rounded-lg`}>{SetStatus(item.date, item.time)}</span></td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{item.total_prize}</td>
                                     <td className="px-6 py-4 flex gap-2">
-                                        <button disabled={SetStatus(item.date, item.time) == "starting" ? false : true} onClick={() => navigate(`/addresult/${item.id}`)} className="btn">Add Result</button>
-                                        <button onClick={() => ChangeStatuse(item.id, parseInt(item.status == 1 ? 0 : 1))} className={`btn ${item.status == 1 ?"bg-red-500":"bg-green-500"}`}>{item.status == 1 ? "Disable" : "Enable"}</button>
+                                        <button disabled={SetStatus(item.date, item.time) == "Ended" ? false : true} onClick={() => navigate(`/addresult/${item.id}`)} className="btn">Add Result</button>
+                                        <button disabled={SetStatus(item.date, item.time) == "Ended" ? false : true} onClick={() => ChangeStatuse(item.id, parseInt(item.status == 1 ? 0 : 1))} className={`btn ${item.status == 1 ?"bg-red-500":"bg-green-500"}`}>{item.status == 1 ? "Disable" : "Enable"}</button>
                                     </td>
                                 </tr>
                             )) : (

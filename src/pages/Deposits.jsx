@@ -62,6 +62,7 @@ const Deposits = () => {
             const term = searchTerm.toLowerCase();
             temp = temp.filter(d =>
                 d.user_id?.toLowerCase().includes(term) ||
+                d.ex1?.toLowerCase().includes(term) ||
                 d.transaction_id?.toLowerCase().includes(term) ||
                 d.payment_phone_number?.toLowerCase().includes(term) ||
                 d.payment_method?.toLowerCase().includes(term) ||
@@ -162,6 +163,7 @@ const Deposits = () => {
                     <thead className="bg-gray-800">
                         <tr>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">User ID</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">User Name</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Transaction ID</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Phone Number</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Payment Method</th>
@@ -174,6 +176,7 @@ const Deposits = () => {
                             {filteredList?.map((deposit) => (
                                 <tr key={deposit.id}>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.user_id}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-200">{deposit.ex1}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">#{deposit.transaction_id}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.payment_phone_number}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.payment_method}</td>
