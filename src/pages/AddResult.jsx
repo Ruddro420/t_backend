@@ -30,6 +30,9 @@ const AddResult = () => {
                     ex_1: join.ex1,
                     pname1_kill: 0,
                     pname2_kill: 0,
+                    pname3_kill: 0,
+                    pname4_kill: 0,
+                    custom_prize: 0,
                     total_prize: 0
                 }));
 
@@ -42,16 +45,27 @@ const AddResult = () => {
                         return existing
                             ? {
                                 ...existing,
-                                ex_1: join.ex1, // Ensure ex_1 is kept from matchData
+                                ex_1: join.ex1,
                                 pname1_kill: parseInt(existing.pname1_kill) || 0,
                                 pname2_kill: parseInt(existing.pname2_kill) || 0,
-                                total_prize: (parseInt(existing.pname1_kill) + parseInt(existing.pname2_kill)) * parseInt(matchData.kill_price)
+                                pname3_kill: parseInt(existing.pname3_kill) || 0,
+                                pname4_kill: parseInt(existing.pname4_kill) || 0,
+                                custom_prize: parseInt(existing.custom_prize) || 0,
+                                total_prize: ((
+                                    (parseInt(existing.pname1_kill) || 0) +
+                                    (parseInt(existing.pname2_kill) || 0) +
+                                    (parseInt(existing.pname3_kill) || 0) +
+                                    (parseInt(existing.pname4_kill) || 0)
+                                ) * parseInt(matchData.kill_price)) + (parseInt(existing.custom_prize) || 0)
                             }
                             : {
                                 user_id: join.user_id,
                                 ex_1: join.ex1,
                                 pname1_kill: 0,
                                 pname2_kill: 0,
+                                pname3_kill: 0,
+                                pname4_kill: 0,
+                                custom_prize: 0,
                                 total_prize: 0
                             };
                     });
@@ -80,10 +94,19 @@ const AddResult = () => {
     const handleInputChange = (index, field, value) => {
         const updatedResults = [...results];
         updatedResults[index][field] = parseInt(value) || 0;
-        const pname1Kill = parseInt(updatedResults[index].pname1_kill) || 0;
-        const pname2Kill = parseInt(updatedResults[index].pname2_kill) || 0;
+
         const killPrice = parseInt(matchDetails.kill_price) || 0;
-        updatedResults[index].total_prize = (pname1Kill + pname2Kill) * killPrice;
+        const totalKills = (
+            parseInt(updatedResults[index].pname1_kill) || 0
+        ) + (
+                parseInt(updatedResults[index].pname2_kill) || 0
+            ) + (
+                parseInt(updatedResults[index].pname3_kill) || 0
+            ) + (
+                parseInt(updatedResults[index].pname4_kill) || 0
+            );
+
+        updatedResults[index].total_prize = (totalKills * killPrice) + parseInt(updatedResults[index].custom_prize) || 0;
         setResults(updatedResults);
     };
 
@@ -152,7 +175,7 @@ const AddResult = () => {
                             <option value="">Select {pos.label}</option>
                             {matchDetails?.joins?.map((player, i) => (
                                 <option key={i} value={player.user_id}>
-                                    {player.pname1}  {player.pname2 && `& ${player.pname2}`}
+                                    {player.pname1}  {player.pname2 && `& ${player.pname2}`} {player.pname3 && `& ${player.pname3}`} {player.pname4 && `& ${player.pname4}`}
                                 </option>
                             ))}
                         </select>
@@ -175,6 +198,12 @@ const AddResult = () => {
                                             <th className="px-6 py-3 text-xs font-medium text-gray-200">Player 1 Kill</th>
                                             <th className="px-6 py-3 text-xs font-medium text-gray-200">Player 2</th>
                                             <th className="px-6 py-3 text-xs font-medium text-gray-200">Player 2 Kill</th>
+                                            <th className="px-6 py-3 text-xs font-medium text-gray-200">Player 3</th>
+                                            <th className="px-6 py-3 text-xs font-medium text-gray-200">Player 3 Kill</th>
+                                            <th className="px-6 py-3 text-xs font-medium text-gray-200">Player 4</th>
+                                            <th className="px-6 py-3 text-xs font-medium text-gray-200">Player 4 Kill</th>
+                                            <th className="px-6 py-3 text-xs font-medium text-gray-200">Extra Prize</th>
+
                                             <th className="px-6 py-3 text-xs font-medium text-gray-200">Total Prize</th>
                                         </tr>
                                     </thead>
@@ -201,6 +230,36 @@ const AddResult = () => {
                                                             onChange={(e) => handleInputChange(i, 'pname2_kill', e.target.value)}
                                                         />
                                                     )}
+                                                </td>
+                                                <td className="px-6 py-4 text-sm text-gray-200">{item.pname3 || ""}</td>
+                                                <td className="px-6 py-4">
+                                                    {item.pname3 && (
+                                                        <input
+                                                            type="number"
+                                                            className="w-24 p-1 rounded bg-gray-700 text-white"
+                                                            value={results[i]?.pname3_kill || 0}
+                                                            onChange={(e) => handleInputChange(i, 'pname3_kill', e.target.value)}
+                                                        />
+                                                    )}
+                                                </td>
+                                                <td className="px-6 py-4 text-sm text-gray-200">{item.pname4 || ""}</td>
+                                                <td className="px-6 py-4">
+                                                    {item.pname4 && (
+                                                        <input
+                                                            type="number"
+                                                            className="w-24 p-1 rounded bg-gray-700 text-white"
+                                                            value={results[i]?.pname4_kill || 0}
+                                                            onChange={(e) => handleInputChange(i, 'pname4_kill', e.target.value)}
+                                                        />
+                                                    )}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <input
+                                                        type="number"
+                                                        className="w-24 p-1 rounded bg-gray-700 text-white"
+                                                        value={results[i]?.custom_prize || 0}
+                                                        onChange={(e) => handleInputChange(i, 'custom_prize', e.target.value)}
+                                                    />
                                                 </td>
                                                 <td className="px-6 py-4 text-sm text-gray-200">
                                                     {results[i]?.total_prize || 0}

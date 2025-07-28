@@ -2,7 +2,8 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Loader from "../components/Loader";
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import toast from 'react-hot-toast';
 const AllMatch = () => {
     const [matchList, setMatchList] = useState([]);
     const [loader, setLoader] = useState(true);
@@ -24,6 +25,27 @@ const AllMatch = () => {
     useEffect(() => {
         fetchMatches();
     }, []);
+
+    // SetStatus if match time ended then status = ended else active
+    const SetStatus = (date, time) => {
+        const matchDateTime = new Date(`${date}T${time}`);
+        const now = new Date();
+        return now > matchDateTime ? "Ended" : "starting";
+    }
+    const navigate = useNavigate();
+
+    const ChangeStatuse = async (id, status) => {
+        const request = axios.post(`${VITE_SERVER_API}/match-status/${id}/${status}`);
+        toast.promise(request, {
+            loading: "Updating...",
+            success: "Status updated successfully!",
+            error: "Something went wrong!",
+        });
+        request
+        fetchMatches();
+    };
+
+
     return (
 
         <div className="lg:p-6 py-6 space-y-6">
@@ -41,6 +63,7 @@ const AllMatch = () => {
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Version</th>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Date</th>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Time</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Status</th>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Total Prize</th>
                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Action</th>
                             </tr>
@@ -58,9 +81,11 @@ const AllMatch = () => {
                                     <td className="px-6 py-4 text-sm text-gray-200">{item.version}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{item.date}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{item.time}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-200"><span className={`${SetStatus(item.date, item.time) == "starting" ? "bg-green-500" : "bg-red-500"} p-2 rounded-lg`}>{SetStatus(item.date, item.time)}</span></td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{item.total_prize}</td>
                                     <td className="px-6 py-4 flex gap-2">
-                                         <Link to={`/addresult/${item.id}`} className="btn"> Result</Link>
+                                        <button disabled={SetStatus(item.date, item.time) == "starting" ? false : true} onClick={() => navigate(`/addresult/${item.id}`)} className="btn">Add Result</button>
+                                        <button onClick={() => ChangeStatuse(item.id, parseInt(item.status == 1 ? 0 : 1))} className={`btn ${item.status == 1 ?"bg-red-500":"bg-green-500"}`}>{item.status == 1 ? "Disable" : "Enable"}</button>
                                     </td>
                                 </tr>
                             )) : (
