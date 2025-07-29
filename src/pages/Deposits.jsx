@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import Loader from "../components/Loader";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase/firebase";
+
 const Deposits = () => {
     const VITE_SERVER_API = import.meta.env.VITE_SERVER_API;
 
@@ -12,6 +13,8 @@ const Deposits = () => {
     const [filteredList, setFilteredList] = useState([]);
     const [loader, setLoader] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(10);
 
     const sendNotification = async (userId, message) => {
         try {
@@ -20,12 +23,10 @@ const Deposits = () => {
                 message: message,
                 timestamp: serverTimestamp()
             });
-            // alert('Notification sent!');
         } catch (error) {
             console.error('Error sending notification:', error);
         }
     };
-
 
     const [filters, setFilters] = useState({
         user_id: "",
@@ -81,8 +82,8 @@ const Deposits = () => {
         }
 
         setFilteredList(temp);
+        setCurrentPage(1); // Reset to first page when filters change
     };
-
 
     const resetFilters = () => {
         setSearchTerm("");
@@ -93,11 +94,9 @@ const Deposits = () => {
         setFilteredList(depositList);
     };
 
-
     useEffect(() => {
         handleFilter();
-    }, [filters, searchTerm]); // <-- Add searchTerm here
-
+    }, [filters, searchTerm]);
 
     const onSubmit = async (id, userid, amount, status) => {
         const request = axios.post(`${VITE_SERVER_API}/deposites/${id}/${status}`);
@@ -107,16 +106,24 @@ const Deposits = () => {
             error: "Something went wrong!",
         });
         request
-        fetchDeposits()
-        sendNotification(userid, `Your deposit of Taka${amount} has been ${status == 1 ? "approved" : "pending"}!`);
+            .then(() => {
+                fetchDeposits();
+                sendNotification(userid, `Your deposit of Taka${amount} has been ${status == 1 ? "approved" : "pending"}!`);
+            });
     };
+
+    // Pagination logic
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredList.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(filteredList.length / itemsPerPage);
 
     return (
         <div className="lg:p-6 py-6 space-y-6">
             <h2 className="text-2xl font-semibold text-blue-500">All Deposits</h2>
 
             {/* Filter Inputs */}
-                <h2 className="text-xl font-semibold text-gray-200  py-2">Filter Deposits</h2>
+            <h2 className="text-xl font-semibold text-gray-200 py-2">Filter Deposits</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-gray-800 p-4 rounded-lg">
                 <input
                     type="text"
@@ -153,11 +160,8 @@ const Deposits = () => {
                 </button>
             </div>
 
-
             {/* Table */}
-            <h2 className="text-xl font-semibold text-gray-200 ">
-                Deposits
-            </h2>
+            <h2 className="text-xl font-semibold text-gray-200">Deposits</h2>
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-800">
@@ -168,12 +172,13 @@ const Deposits = () => {
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Phone Number</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Payment Method</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Amount</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Status</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Action</th>
                         </tr>
                     </thead>
                     {!loader ? (
                         <tbody className="bg-gray-800 divide-y divide-gray-700">
-                            {filteredList?.map((deposit) => (
+                            {currentItems?.map((deposit) => (
                                 <tr key={deposit.id}>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.user_id}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.ex1}</td>
@@ -181,19 +186,26 @@ const Deposits = () => {
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.payment_phone_number}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.payment_method}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.amount} ৳</td>
+                                    <td className="px-6 py-4 text-sm text-gray-200">
+                                        <span className={`px-2 py-1 rounded-full text-xs ${
+                                            deposit.status == 1 ? 'bg-green-500' : 'bg-yellow-500'
+                                        }`}>
+                                            {deposit.status == 1 ? "Approved" : "Pending"}
+                                        </span>
+                                    </td>
                                     <td className="px-6 py-4 flex gap-2">
                                         <button
-                                            className={`btn ${deposit.status == 0 ? 'btn-success' : 'bg-red-500'} text-white`}
+                                            className={`btn ${deposit.status == 0 ? 'bg-green-500' : 'bg-yellow-500'} text-white px-3 py-1 rounded-md`}
                                             onClick={() => onSubmit(deposit.id, deposit.user_id, deposit.amount, deposit.status == 0 ? 1 : 0)}
                                         >
-                                            {deposit.status == 0 ? "Approve" : "Pending"}
+                                            {deposit.status == 0 ? "Approve" : "Set Pending"}
                                         </button>
                                     </td>
                                 </tr>
                             ))}
-                            {filteredList.length === 0 && (
+                            {currentItems.length === 0 && (
                                 <tr>
-                                    <td colSpan="6" className="text-center text-gray-400 py-4">
+                                    <td colSpan="8" className="text-center text-gray-400 py-4">
                                         No deposits found.
                                     </td>
                                 </tr>
@@ -203,6 +215,40 @@ const Deposits = () => {
                         <Loader />
                     )}
                 </table>
+
+                {/* Pagination Controls */}
+                {!loader && filteredList.length > 0 && (
+                    <div className="flex justify-between items-center mt-4 bg-gray-800 p-4 rounded-lg">
+                        <div className="text-sm text-gray-400">
+                            Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, filteredList.length)} of {filteredList.length} deposits
+                        </div>
+                        <div className="flex space-x-2">
+                            <button
+                                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                disabled={currentPage === 1}
+                                className={`px-4 py-2 rounded-md ${currentPage === 1 ? 'bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-gray-600 text-white hover:bg-gray-500'}`}
+                            >
+                                Previous
+                            </button>
+                            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                                <button
+                                    key={page}
+                                    onClick={() => setCurrentPage(page)}
+                                    className={`px-4 py-2 rounded-md ${currentPage === page ? 'bg-blue-500 text-white' : 'bg-gray-600 text-white hover:bg-gray-500'}`}
+                                >
+                                    {page}
+                                </button>
+                            ))}
+                            <button
+                                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                disabled={currentPage === totalPages}
+                                className={`px-4 py-2 rounded-md ${currentPage === totalPages ? 'bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-gray-600 text-white hover:bg-gray-500'}`}
+                            >
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

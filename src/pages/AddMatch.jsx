@@ -22,6 +22,18 @@ const AddMatch = () => {
     const VITE_SERVER_API = import.meta.env.VITE_SERVER_API;
     const VITE_FILE_API = import.meta.env.VITE_FILE_API;
 
+
+    // Add these state variables at the top of your component with other state declarations
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(10); // Number of items per page
+
+    // Add this pagination logic before the return statement
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = matchList?.slice(indexOfFirstItem, indexOfLastItem) || [];
+    const totalPages = Math.ceil(matchList?.length / itemsPerPage) || 1;
+
+
     // Load categories
     const fetchCategories = () => {
         axios
@@ -89,7 +101,7 @@ const AddMatch = () => {
 
     const handleEdit = (item) => {
         setEditId(item.id);
-        
+
         // Set all form values including category_id
         Object.entries(item).forEach(([key, value]) => {
             if (key === "category") {
@@ -321,7 +333,7 @@ const AddMatch = () => {
                                 </tr>
                             </thead>
                             <tbody className="bg-gray-800 divide-y divide-gray-700">
-                                {matchList && matchList.length > 0 ? matchList.map((item) => (
+                                {currentItems && currentItems.length > 0 ? currentItems.map((item) => (
                                     <tr key={item.id}>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <img className="w-10 h-10 rounded" src={`${VITE_FILE_API}/${item.category?.image}`} alt={item.name} />
@@ -348,6 +360,38 @@ const AddMatch = () => {
                         </table>
                     ) : (
                         <Loader />
+                    )}
+                    {!loader && matchList?.length > 0 && (
+                        <div className="flex justify-between items-center mt-4 bg-gray-800 p-4 rounded-lg">
+                            <div className="text-sm text-gray-400">
+                                Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, matchList.length)} of {matchList.length} matches
+                            </div>
+                            <div className="flex space-x-2">
+                                <button
+                                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                    disabled={currentPage === 1}
+                                    className={`px-4 py-2 rounded-md ${currentPage === 1 ? 'bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-gray-600 text-white hover:bg-gray-500'}`}
+                                >
+                                    Previous
+                                </button>
+                                {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                                    <button
+                                        key={page}
+                                        onClick={() => setCurrentPage(page)}
+                                        className={`px-4 py-2 rounded-md ${currentPage === page ? 'bg-blue-500 text-white' : 'bg-gray-600 text-white hover:bg-gray-500'}`}
+                                    >
+                                        {page}
+                                    </button>
+                                ))}
+                                <button
+                                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                    disabled={currentPage === totalPages}
+                                    className={`px-4 py-2 rounded-md ${currentPage === totalPages ? 'bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-gray-600 text-white hover:bg-gray-500'}`}
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        </div>
                     )}
                 </div>
             </div>

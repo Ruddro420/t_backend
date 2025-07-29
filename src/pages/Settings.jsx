@@ -19,72 +19,81 @@ const Settings = () => {
 
 
     useEffect(() => {
-
         axios.get(`${VITE_SERVER_API}/settings`)
             .then(function (response) {
-                setSettingsData(response.data);
+                setSettingsData(response.data.settings); // response.data.settings is an object, not array
                 setLoading(false);
-                console.log(response.data);
             })
             .catch(function (error) {
                 setLoading(false);
                 console.log(error);
-            })
-
+            });
     }, [VITE_SERVER_API]);
 
-    useEffect(() => {
-        /* Check info Data */
 
-        if (settingsData.length > 0) {
-            setEditId(settingsData[0]?.id);
-            for (const key in settingsData[0]) {
-                if (key in settingsData[0]) setValue(key, settingsData[0][key]);
+    useEffect(() => {
+        if (settingsData && Object.keys(settingsData).length > 0) {
+            setEditId(settingsData?.id);
+            for (const key in settingsData) {
+                if (key in settingsData) setValue(key, settingsData[key]);
             }
-            // Set logo preview if image exists
-            settingsData[0]?.app_logo ? setPreviewLogo(`${VITE_FILE_API}/${settingsData[0].app_logo}`) : setPreviewLogo(null);
-            // Set banner previews if images exist
-            settingsData[0]?.banner_1 ? setPreviewBanner_1(`${VITE_FILE_API}/${settingsData[0].banner_1}`) : setPreviewBanner_1(null);
-            settingsData[0]?.banner_2 ? setPreviewBanner_2(`${VITE_FILE_API}/${settingsData[0].banner_2}`) : setPreviewBanner_2(null);
-            settingsData[0]?.banner_3 ? setPreviewBanner_3(`${VITE_FILE_API}/${settingsData[0].banner_3}`) : setPreviewBanner_3(null);
+
+            // Set previews
+            settingsData?.app_logo && setPreviewLogo(`${VITE_FILE_API}/${settingsData.app_logo}`);
+            settingsData?.banner_1 && setPreviewBanner_1(`${VITE_FILE_API}/${settingsData.banner_1}`);
+            settingsData?.banner_2 && setPreviewBanner_2(`${VITE_FILE_API}/${settingsData.banner_2}`);
+            settingsData?.banner_3 && setPreviewBanner_3(`${VITE_FILE_API}/${settingsData.banner_3}`);
         }
     }, [VITE_FILE_API, settingsData, setValue]);
 
-    const onSubmit = (data) => {
-        const formData = new FormData();
-        formData.append('notice', data.notice);
-        formData.append('app_name', data.app_name);
-        // Only append logo if a new one was selected
-        (data.app_logo && data.app_logo.length > 0) && formData.append('app_logo', data.app_logo[0]);
-        // Only append banners if new ones were selected
-        (data.banner_1 && data.banner_1.length > 0) && formData.append('banner_1', data.banner_1[0]);
-        (data.banner_2 && data.banner_2.length > 0) && formData.append('banner_2', data.banner_2[0]);
-        (data.banner_3 && data.banner_3.length > 0) && formData.append('banner_3', data.banner_3[0]);
 
-        const request = editId
-            ? axios.post(`${VITE_SERVER_API}/settings/${editId}`, formData)
-            : axios.post(`${VITE_SERVER_API}/add/settings`, formData);
+   const onSubmit = (data) => {
+    const formData = new FormData();
+    formData.append('notice', data.notice);
+    formData.append('app_name', data.app_name);
 
-        toast.promise(request, {
-            loading: editId ? 'Updating info...' : 'Saving info...',
-            success: editId ? 'Info updated!' : 'Info saved!',
-            error: 'Something went wrong!',
+    // Check if it's a File before appending
+    if (data.app_logo && data.app_logo[0] instanceof File) {
+        formData.append('app_logo', data.app_logo[0]);
+    }
+
+    if (data.banner_1 && data.banner_1[0] instanceof File) {
+        formData.append('banner_1', data.banner_1[0]);
+    }
+
+    if (data.banner_2 && data.banner_2[0] instanceof File) {
+        formData.append('banner_2', data.banner_2[0]);
+    }
+
+    if (data.banner_3 && data.banner_3[0] instanceof File) {
+        formData.append('banner_3', data.banner_3[0]);
+    }
+
+    const request = editId
+        ? axios.post(`${VITE_SERVER_API}/settings/${editId}`, formData)
+        : axios.post(`${VITE_SERVER_API}/add/settings`, formData);
+
+    toast.promise(request, {
+        loading: editId ? 'Updating info...' : 'Saving info...',
+        success: editId ? 'Settings updated!' : 'Settings saved!',
+        error: 'Something went wrong!',
+    });
+
+    request.then(() => {
+        setEditId(null);
+        reset();
+        setPreviewLogo(null);
+        setPreviewBanner_1(null);
+        setPreviewBanner_2(null);
+        setPreviewBanner_3(null);
+        axios.get(`${VITE_SERVER_API}/settings`).then(res => {
+            setSettingsData(res.data.settings);
         });
+    }).catch((error) => {
+        console.error(error.response?.data || error);
+    });
+};
 
-        request.then(() => {
-            setEditId(null);  // Clear edit state
-            reset();          // Clear form           
-            setPreviewLogo(null);
-            setPreviewBanner_1(null);
-            setPreviewBanner_2(null);
-            setPreviewBanner_3(null);
-            axios.get(`${VITE_SERVER_API}/settings`).then(res => {
-                setSettingsData(res.data);
-            });
-        }).catch((error) => {
-            console.error(error);
-        });
-    };
 
 
 
@@ -216,34 +225,6 @@ const Settings = () => {
                                 {editId ? 'Update' : 'Submit'}
                             </button>
                         </div>
-
-                        {editId && (
-                            <div className="col-span-6 sm:col-span-3">
-                                <div className={`${classList.label} text-transparent`}> Submit{" "}</div>
-                                <button className={`${classList.button} btn bg-red-500`}
-                                    type="button"
-                                    onClick={() => {
-                                        if (window.confirm("Are you sure you want to delete this module?")) {
-                                            toast.promise(
-                                                axios
-                                                    .delete(`${VITE_SERVER_API}/settings/${settingsData[0].id}`)
-                                                    .then(() => {
-                                                        setSettingsData([]);
-                                                        setPreviewLogo(null);
-                                                    }),
-                                                {
-                                                    loading: "Deleting...",
-                                                    success: "Deleted successfully!",
-                                                    error: "Error deleting module",
-                                                }
-                                            );
-                                        }
-                                    }}
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        )}
                     </div>
                 </form>
             </>)}

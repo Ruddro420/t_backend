@@ -270,7 +270,7 @@ const AddResult = () => {
                                 </table>
                             </div>
                             <div className="mt-6">
-                                <button
+                                <button disabled={isEditMode?true:false}
                                     type="submit"
                                     className="shadow-sm bg-blue-800 border text-white sm:text-sm rounded-lg block w-full p-2.5 cursor-pointer"
                                 >
