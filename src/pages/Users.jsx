@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "../components/Loader";
-
+ 
 const Users = () => {
     const VITE_SERVER_API = import.meta.env.VITE_SERVER_API;
 
