@@ -212,20 +212,7 @@ const AddResult = () => {
                                         {matchDetails.joins?.map((item, i) => (
                                             <tr key={i}>
                                                 <td className="px-6 py-4 text-sm text-gray-200">{i + 1}</td>
-                                                <td className="px-6 py-4 text-sm text-gray-200 flex items-center gap-2">
-                                                    <span className="truncate max-w-[80px]" title={item.user_id}>
-                                                        {item.user_id?.slice(0, 6)}...
-                                                    </span>
-                                                    <button
-                                                        className="bg-gray-700 hover:bg-gray-600 text-xs px-2 py-1 rounded text-white"
-                                                        onClick={() => {
-                                                            navigator.clipboard.writeText(item.user_id);
-                                                            toast.success("User ID copied!");
-                                                        }}
-                                                    >
-                                                        Copy
-                                                    </button>
-                                                </td>
+                                                <td className="px-6 py-4 text-sm text-gray-200">{item.user_id}</td>
                                                 <td className="px-6 py-4 text-sm text-gray-200">{item.pname1}</td>
                                                 <td className="px-6 py-4">
                                                     <input
@@ -285,7 +272,7 @@ const AddResult = () => {
                                 </table>
                             </div>
                             <div className="mt-6">
-                                <button disabled={isEditMode ? true : false}
+                                <button disabled={isEditMode?true:false}
                                     type="submit"
                                     className="shadow-sm bg-blue-800 border text-white sm:text-sm rounded-lg block w-full p-2.5 cursor-pointer"
                                 >

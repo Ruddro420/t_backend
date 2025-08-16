@@ -19,7 +19,6 @@ import AllMatch from "./pages/AllMatch.jsx";
 import AddResult from "./pages/AddResult.jsx";
 import Users from "./pages/Users.jsx";
 import Payment from "./pages/Payment.jsx";
-import PromoCode from "./pages/PromoCode.jsx";
 const router = createBrowserRouter([
   {
     path: "",
@@ -69,10 +68,6 @@ const router = createBrowserRouter([
       {
         path: "/payment",
         element: <Payment />,
-      },
-      {
-        path: "/promocode",
-        element: <PromoCode />,
       },
 
     ],

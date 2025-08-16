@@ -65,11 +65,6 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
       title: 'Payment Method',
       link: '/payment',
       icon: <MdDashboard />
-    },
-    {
-      title: 'Promo/Offer',
-      link: '/promocode',
-      icon: <MdDashboard />
     }
 
     /* ,

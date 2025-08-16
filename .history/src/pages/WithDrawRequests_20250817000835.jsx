@@ -178,21 +178,7 @@ const WithDrawRequests = () => {
                         <tbody className="bg-gray-800 divide-y divide-gray-700">
                             {currentItems?.map((withdraw) => (
                                 <tr key={withdraw.id}>
-                                    {/* <td className="px-6 py-4 text-sm text-gray-200">{withdraw.user_id}</td> */}
-                                     <td className="px-6 py-4 text-sm text-gray-200 flex items-center gap-2">
-                                        <span className="truncate max-w-[80px]" title={withdraw.user_id}>
-                                            {withdraw.user_id?.slice(0, 6)}...
-                                        </span>
-                                        <button
-                                            className="bg-gray-700 hover:bg-gray-600 text-xs px-2 py-1 rounded text-white"
-                                            onClick={() => {
-                                                navigator.clipboard.writeText(withdraw.user_id);
-                                                toast.success("User ID copied!");
-                                            }}
-                                        >
-                                            Copy
-                                        </button>
-                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-200">{withdraw.user_id}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{withdraw.user_name}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{withdraw.payment_method}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{withdraw.payment_phone_number}</td>
