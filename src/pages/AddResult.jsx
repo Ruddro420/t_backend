@@ -165,7 +165,7 @@ const AddResult = () => {
                 ].map((pos, i) => (
                     <div key={i}>
                         <label className="text-sm font-medium text-gray-200 block mb-2">
-                            Select {pos.label} ({pos.prize})<span className="text-red-500">*</span>
+                            Select {pos.label} ({pos.prize})
                         </label>
                         <select
                             value={pos.state}
