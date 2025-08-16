@@ -180,29 +180,16 @@ const Deposits = () => {
                         <tbody className="bg-gray-800 divide-y divide-gray-700">
                             {currentItems?.map((deposit) => (
                                 <tr key={deposit.id}>
-                                    <td className="px-6 py-4 text-sm text-gray-200 flex items-center gap-2">
-                                        <span className="truncate max-w-[80px]" title={deposit.user_id}>
-                                            {deposit.user_id?.slice(0, 6)}...
-                                        </span>
-                                        <button
-                                            className="bg-gray-700 hover:bg-gray-600 text-xs px-2 py-1 rounded text-white"
-                                            onClick={() => {
-                                                navigator.clipboard.writeText(deposit.user_id);
-                                                toast.success("User ID copied!");
-                                            }}
-                                        >
-                                            Copy
-                                        </button>
-                                    </td>
-
+                                    <td className="px-6 py-4 text-sm text-gray-200">{deposit.user_id}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.ex1}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">#{deposit.transaction_id}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.payment_phone_number}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.payment_method}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.amount} ৳</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">
-                                        <span className={`px-2 py-1 rounded-full text-xs ${deposit.status == 1 ? 'bg-green-500' : 'bg-yellow-500'
-                                            }`}>
+                                        <span className={`px-2 py-1 rounded-full text-xs ${
+                                            deposit.status == 1 ? 'bg-green-500' : 'bg-yellow-500'
+                                        }`}>
                                             {deposit.status == 1 ? "Approved" : "Pending"}
                                         </span>
                                     </td>

@@ -211,25 +211,20 @@ const Users = () => {
                         <tbody className="bg-gray-800 divide-y divide-gray-700">
                             {currentUsers?.map((user) => (
                                 <tr key={user?.uid}>
-                                    {/* <td className="px-6 py-4 text-sm text-gray-200">#{user?.uid}</td> */}
-
-
                                     <td className="px-6 py-4 text-sm text-gray-200 flex items-center gap-2">
-                                        <span className="truncate max-w-[80px]" title={user.uid}>
-                                            {user.uid?.slice(0, 6)}...
+                                        <span className="truncate max-w-[80px]" title={user.user_id}>
+                                            {user.user_id?.slice(0, 6)}...
                                         </span>
                                         <button
                                             className="bg-gray-700 hover:bg-gray-600 text-xs px-2 py-1 rounded text-white"
                                             onClick={() => {
-                                                navigator.clipboard.writeText(user.uid);
+                                                navigator.clipboard.writeText(user.user_id);
                                                 toast.success("User ID copied!");
                                             }}
                                         >
                                             Copy
                                         </button>
                                     </td>
-
-
                                     <td className="px-6 py-4 text-sm text-gray-200">{user?.name}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{user?.email}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{formatDateandTime(user?.created_at)}</td>

@@ -120,7 +120,7 @@ const Settings = () => {
                             <input type="text" id="notice" {...register("notice", { required: true })} className={classList.input} placeholder="Enter Notice" />
                         </div>
                         <div className=' flex lg:grid grid-cols-4 md:grid  flex-col col-span-6 gap-6 w-full'>
-                            {/* <div>
+                            <div>
                                 <label htmlFor="app_logo" className="text-sm font-medium text-gray-200 block mb-2">
                                     Upload Logo Image <span className="text-red-500">*</span>
                                 </label>
@@ -143,7 +143,7 @@ const Settings = () => {
                                 {previewLogo && (
                                     <img src={previewLogo} alt="Logo Preview" className="w-16 h-16 rounded mt-2 border border-gray-600" />
                                 )}
-                            </div> */}
+                            </div>
                             <div>
                                 <label htmlFor="banner_1" className="text-sm font-medium text-gray-200 block mb-2">
                                     Upload Banner 1 <span className="text-red-500">*</span>
