@@ -68,33 +68,47 @@ const AddResult = () => {
   };
 
   // submit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(results);
+   const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!winner) {
+            toast.error('Please select at least the winner');
+            return;
+        }
 
-    const payload = {
-        match_id: matchId,
-        winner,
-        second,
-        third,
-        fourth,
-        fifth,
-        sixth,
-        result: results,
-    };
+        try {
+            const response = await fetch(`${VITE_SERVER_API}/match/result`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    match_id: matchId,
+                    winner,
+                    second,
+                    third,
+                    fourth,
+                    fifth,
+                    sixth,
+                    result: results
+                }),
+                credentials: 'include'
+            });
 
-    console.log(payload);
-    
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to submit results');
+            }
 
-    try {
-        const { data } = await axios.post(`${VITE_SERVER_API}/match-result`, payload);
-        toast.success("Results submitted successfully!");
-        console.log("Response:", data);
-    } catch (err) {
-        console.error("❌ Submit error:", err.response?.data || err);
-        toast.error(err.response?.data?.message || "Error submitting results.");
+            const data = await response.json();
+            toast.success(data.message || 'Results submitted successfully!');
+            // setIsEditMode(true);
+        } catch (error) {
+            console.error('Submission error:', error);
+            toast.error(error.message || 'Error submitting results');
+        }
     }
-};
 
   return (
     <div className="lg:p-6 py-6 space-y-6">

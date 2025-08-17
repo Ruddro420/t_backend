@@ -200,7 +200,7 @@ const Deposits = () => {
                                     <td className="px-6 py-4 text-sm text-gray-200">#{deposit.transaction_id}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.payment_phone_number}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.payment_method}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-200 bg-red-500">{deposit?.ex2} </td>
+                                    <td className="px-6 py-4 text-sm text-gray-200 bg-yellow-500">{deposit?.ex2} </td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.amount} ৳</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">
                                         <span className={`px-2 py-1 rounded-full text-xs ${deposit.status == 1 ? 'bg-green-500' : 'bg-yellow-500'

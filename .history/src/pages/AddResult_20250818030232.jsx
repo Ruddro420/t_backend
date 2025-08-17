@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import Loader from "../components/Loader";
 import toast from "react-hot-toast";
-import axios from "axios";
 
 const AddResult = () => {
   const { matchId } = useParams();
@@ -82,9 +81,6 @@ const AddResult = () => {
         sixth,
         result: results,
     };
-
-    console.log(payload);
-    
 
     try {
         const { data } = await axios.post(`${VITE_SERVER_API}/match-result`, payload);
