@@ -17,7 +17,6 @@ const AddResult = () => {
   const [third, setThird] = useState("");
   const [fourth, setFourth] = useState("");
   const [fifth, setFifth] = useState("");
-  const [sixth, setSixth] = useState("");
 
   // fetch match details
   useEffect(() => {
@@ -79,7 +78,6 @@ const AddResult = () => {
         third,
         fourth,
         fifth,
-        sixth,
         result: results,
     };
 
