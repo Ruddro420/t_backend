@@ -171,7 +171,6 @@ const Deposits = () => {
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Transaction ID</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-200"> Number</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-200"> Method</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Promo</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Amount</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Status</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-200">Action</th>
@@ -200,7 +199,6 @@ const Deposits = () => {
                                     <td className="px-6 py-4 text-sm text-gray-200">#{deposit.transaction_id}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.payment_phone_number}</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.payment_method}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-200 bg-red-500">{deposit?.ex2} </td>
                                     <td className="px-6 py-4 text-sm text-gray-200">{deposit.amount} ৳</td>
                                     <td className="px-6 py-4 text-sm text-gray-200">
                                         <span className={`px-2 py-1 rounded-full text-xs ${deposit.status == 1 ? 'bg-green-500' : 'bg-yellow-500'

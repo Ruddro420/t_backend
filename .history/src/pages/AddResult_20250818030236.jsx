@@ -83,9 +83,6 @@ const AddResult = () => {
         result: results,
     };
 
-    console.log(payload);
-    
-
     try {
         const { data } = await axios.post(`${VITE_SERVER_API}/match-result`, payload);
         toast.success("Results submitted successfully!");

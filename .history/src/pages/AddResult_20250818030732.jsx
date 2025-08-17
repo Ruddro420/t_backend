@@ -68,34 +68,41 @@ const AddResult = () => {
   };
 
   // submit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(results);
-
-    const payload = {
-        match_id: matchId,
-        winner,
-        second,
-        third,
-        fourth,
-        fifth,
-        sixth,
-        result: results,
-    };
-
-    console.log(payload);
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  const payload = {
+    match_id: matchId,
+    winner,
+    second,
+    third,
+    fourth,
+    fifth,
+    sixth,
+    result: results,
+  };
+  try {
+    const res = await fetch(`${VITE_SERVER_API}/match-result`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
     
-
-    try {
-        const { data } = await axios.post(`${VITE_SERVER_API}/match-result`, payload);
-        toast.success("Results submitted successfully!");
-        console.log("Response:", data);
-    } catch (err) {
-        console.error("❌ Submit error:", err.response?.data || err);
-        toast.error(err.response?.data?.message || "Error submitting results.");
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.message || "Submission failed.");
     }
+    
+    const data = await res.json();
+    toast.success("Results submitted successfully!");
+  } catch (err) {
+    console.error("❌ Submit error:", err);
+    if (err.message.includes("Failed to fetch")) {
+      toast.error("Network error: Could not connect to the server. This might be a CORS issue. Please check server configuration.");
+    } else {
+      toast.error(err.message || "Error submitting results.");
+    }
+  }
 };
-
   return (
     <div className="lg:p-6 py-6 space-y-6">
       <h2 className="text-2xl font-semibold text-blue-500">

@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import Loader from "../components/Loader";
 import toast from "react-hot-toast";
-import axios from "axios";
 
 const AddResult = () => {
   const { matchId } = useParams();
@@ -70,31 +69,36 @@ const AddResult = () => {
   // submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(results);
 
     const payload = {
-        match_id: matchId,
-        winner,
-        second,
-        third,
-        fourth,
-        fifth,
-        sixth,
-        result: results,
+      match_id: matchId,
+      winner,
+      second,
+      third,
+      fourth,
+      fifth,
+      sixth,
+      result: results,
     };
 
-    console.log(payload);
-    
-
     try {
-        const { data } = await axios.post(`${VITE_SERVER_API}/match-result`, payload);
+      const res = await fetch(`http://192.168.1.104:8000/api/match-result`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
         toast.success("Results submitted successfully!");
-        console.log("Response:", data);
+      } else {
+        toast.error(data.message || "Submission failed.");
+      }
     } catch (err) {
-        console.error("❌ Submit error:", err.response?.data || err);
-        toast.error(err.response?.data?.message || "Error submitting results.");
+      console.error("❌ Submit error:", err);
+      toast.error("Error submitting results.");
     }
-};
+  };
 
   return (
     <div className="lg:p-6 py-6 space-y-6">
