@@ -22,7 +22,9 @@ const AddResult = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const matchRes = await fetch(`${VITE_SERVER_API}/get/matches/${matchId}`);
+        const matchRes = await fetch(
+          `${VITE_SERVER_API}/get/matches/${matchId}`
+        );
         const matchData = await matchRes.json();
         setMatchDetails(matchData);
 
@@ -72,27 +74,29 @@ const AddResult = () => {
     console.log(results);
 
     const payload = {
-        match_id: matchId,
-        winner,
-        second,
-        third,
-        fourth,
-        fifth,
-        result: results,
+      match_id: matchId,
+      winner,
+      second,
+      third,
+      fourth,
+      fifth,
+      result: results,
     };
 
     console.log(payload);
-    
 
     try {
-        const { data } = await axios.post(`${VITE_SERVER_API}/match-result`, payload);
-        toast.success("Results submitted successfully!");
-        console.log("Response:", data);
+      const { data } = await axios.post(
+        `${VITE_SERVER_API}/match-result`,
+        payload
+      );
+      toast.success("Results submitted successfully!");
+      console.log("Response:", data);
     } catch (err) {
-        console.error("❌ Submit error:", err.response?.data || err);
-        toast.error(err.response?.data?.message || "Error submitting results.");
+      console.error("❌ Submit error:", err.response?.data || err);
+      toast.error(err.response?.data?.message || "Error submitting results.");
     }
-};
+  };
 
   return (
     <div className="lg:p-6 py-6 space-y-6">
@@ -103,11 +107,36 @@ const AddResult = () => {
       {/* Winner selection */}
       <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-2 gap-6 mt-4">
         {[
-          { label: "Winner", state: winner, setter: setWinner, prize: matchDetails?.win_price },
-          { label: "2nd Position", state: second, setter: setSecond, prize: matchDetails?.second_prize },
-          { label: "3rd Position", state: third, setter: setThird, prize: matchDetails?.third_prize },
-          { label: "4th Position", state: fourth, setter: setFourth, prize: matchDetails?.fourth_prize },
-          { label: "5th Position", state: fifth, setter: setFifth, prize: matchDetails?.fifth_prize },
+          {
+            label: "Winner",
+            state: winner,
+            setter: setWinner,
+            prize: matchDetails?.win_price,
+          },
+          {
+            label: "2nd Position",
+            state: second,
+            setter: setSecond,
+            prize: matchDetails?.second_prize,
+          },
+          {
+            label: "3rd Position",
+            state: third,
+            setter: setThird,
+            prize: matchDetails?.third_prize,
+          },
+          {
+            label: "4th Position",
+            state: fourth,
+            setter: setFourth,
+            prize: matchDetails?.fourth_prize,
+          },
+          {
+            label: "5th Position",
+            state: fifth,
+            setter: setFifth,
+            prize: matchDetails?.fifth_prize,
+          },
         ].map((pos, i) => (
           <div key={i}>
             <label className="text-sm font-medium text-gray-200 block mb-2">
@@ -142,21 +171,59 @@ const AddResult = () => {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-800 text-left">
                   <tr>
-                    <th className="px-6 py-3 text-xs font-medium text-gray-200">#</th>
-                    <th className="px-6 py-3 text-xs font-medium text-gray-200">User ID</th>
-                    <th className="px-6 py-3 text-xs font-medium text-gray-200">Player 1 Kill</th>
-                    <th className="px-6 py-3 text-xs font-medium text-gray-200">Player 2 Kill</th>
-                    <th className="px-6 py-3 text-xs font-medium text-gray-200">Player 3 Kill</th>
-                    <th className="px-6 py-3 text-xs font-medium text-gray-200">Player 4 Kill</th>
-                    <th className="px-6 py-3 text-xs font-medium text-gray-200">Extra Prize</th>
-                    <th className="px-6 py-3 text-xs font-medium text-gray-200">Total Prize</th>
+                    <th className="px-6 py-3 text-xs font-medium text-gray-200">
+                      #
+                    </th>
+                    <th className="px-6 py-3 text-xs font-medium text-gray-200">
+                      User ID
+                    </th>
+                    <th className="px-6 py-3 text-xs font-medium text-gray-200">
+                      Player 1 Kill
+                    </th>
+                    <th className="px-6 py-3 text-xs font-medium text-gray-200">
+                      Player 2 Kill
+                    </th>
+                    <th className="px-6 py-3 text-xs font-medium text-gray-200">
+                      Player 3 Kill
+                    </th>
+                    <th className="px-6 py-3 text-xs font-medium text-gray-200">
+                      Player 4 Kill
+                    </th>
+                    <th className="px-6 py-3 text-xs font-medium text-gray-200">
+                      Extra Prize
+                    </th>
+                    <th className="px-6 py-3 text-xs font-medium text-gray-200">
+                      Total Prize
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-gray-800 divide-y divide-gray-700 text-left">
                   {matchDetails.joins?.map((player, i) => (
                     <tr key={i}>
-                      <td className="px-6 py-4 text-sm text-gray-200">{i + 1}</td>
-                      <td className="px-6 py-4 text-sm text-gray-200">{player.user_id}</td>
+                      <td className="px-6 py-4 text-sm text-gray-200">
+                        {i + 1}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-200 flex items-center gap-2">
+                        <span
+                          className="truncate max-w-[80px]"
+                          title={player.user_id}
+                        >
+                          {player.user_id?.slice(0, 6)}...
+                        </span>
+                        <button
+                        type="button"
+                          className="bg-gray-700 hover:bg-gray-600 text-xs px-2 py-1 rounded text-white"
+                          onClick={() => {
+                            navigator.clipboard.writeText(player.user_id);
+                            toast.success("User ID copied!");
+                          }}
+                        >
+                          Copy
+                        </button>
+                      </td>
+                      {/* <td className="px-6 py-4 text-sm text-gray-200">
+                        {player.user_id}
+                      </td> */}
                       {[1, 2, 3, 4].map((num) => (
                         <td key={num} className="px-6 py-4">
                           {player[`pname${num}`] && (
@@ -165,7 +232,11 @@ const AddResult = () => {
                               className="w-20 p-1 rounded bg-gray-700 text-white"
                               value={results[i]?.[`pname${num}_kill`] || 0}
                               onChange={(e) =>
-                                handleInputChange(i, `pname${num}_kill`, e.target.value)
+                                handleInputChange(
+                                  i,
+                                  `pname${num}_kill`,
+                                  e.target.value
+                                )
                               }
                             />
                           )}
