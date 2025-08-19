@@ -98,6 +98,8 @@ const AddResult = () => {
     }
   };
 
+
+
   return (
     <div className="lg:p-6 py-6 space-y-6">
       <h2 className="text-2xl font-semibold text-blue-500">
@@ -211,7 +213,7 @@ const AddResult = () => {
                           {player.user_id?.slice(0, 6)}...
                         </span>
                         <button
-                        type="button"
+                          type="button"
                           className="bg-gray-700 hover:bg-gray-600 text-xs px-2 py-1 rounded text-white"
                           onClick={() => {
                             navigator.clipboard.writeText(player.user_id);
@@ -221,24 +223,27 @@ const AddResult = () => {
                           Copy
                         </button>
                       </td>
-                      {/* <td className="px-6 py-4 text-sm text-gray-200">
-                        {player.user_id}
-                      </td> */}
+                      {/* Show pname here */}
                       {[1, 2, 3, 4].map((num) => (
                         <td key={num} className="px-6 py-4">
                           {player[`pname${num}`] && (
-                            <input
-                              type="number"
-                              className="w-20 p-1 rounded bg-gray-700 text-white"
-                              value={results[i]?.[`pname${num}_kill`] || 0}
-                              onChange={(e) =>
-                                handleInputChange(
-                                  i,
-                                  `pname${num}_kill`,
-                                  e.target.value
-                                )
-                              }
-                            />
+                            <div className="flex flex-col gap-1">
+                              <span className="">
+                                {player[`pname${num}`]}
+                              </span>
+                              <input
+                                type="number"
+                                className="w-20 p-1 rounded bg-gray-700 text-white"
+                                value={results[i]?.[`pname${num}_kill`] || 0}
+                                onChange={(e) =>
+                                  handleInputChange(
+                                    i,
+                                    `pname${num}_kill`,
+                                    e.target.value
+                                  )
+                                }
+                              />
+                            </div>
                           )}
                         </td>
                       ))}
